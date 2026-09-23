@@ -1,12 +1,12 @@
-# Terms and Conditions — HRV by Akshay
+# Terms and Conditions — Body Stress Meter
 
 **Effective date:** 23 September 2026  
 **Last updated:** 23 September 2026  
-**App:** HRV by Akshay
+**App:** Body Stress Meter
 
-These Terms and Conditions (“Terms”) govern your use of **HRV by Akshay** (the “App”). By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
+These Terms and Conditions (“Terms”) govern your use of **Body Stress Meter** (the “App”). By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
 
-HRV by Akshay is an independent personal wellness product. It is not affiliated with, sponsored by, or officially connected to **Samsung**, Google, Health Connect, Wear OS, or any device manufacturer as their product. The App may use public platform APIs (for example Android camera, Wear OS messaging, Health Connect) that **you** authorize.
+Body Stress Meter is an independent personal wellness product. It is not affiliated with, sponsored by, or officially connected to **Samsung**, Google, Health Connect, Wear OS, or any device manufacturer as their product. The App may use public platform APIs (for example Android camera, Wear OS messaging, Health Connect) that **you** authorize.
 
 **We do not collect your HRV, heart rate, or related health readings onto our servers.** Measurements and history stay on your devices unless **you** export or back them up somewhere you choose.
 
@@ -14,7 +14,7 @@ HRV by Akshay is an independent personal wellness product. It is not affiliated 
 
 ## 1. What the App is
 
-HRV by Akshay helps you measure and review **heart rate variability (HRV)** and related heart metrics on a compatible Android phone. Features may include:
+Body Stress Meter helps you measure and review **heart rate variability (HRV)** and related heart metrics on a compatible Android phone. Features may include:
 
 - On-demand HRV measuring with the phone camera (fingertip)  
 - Optional measuring with a paired compatible watch when a companion build is installed on **your** device (not required for the phone app)  
@@ -61,7 +61,7 @@ See our Privacy Policy for details on processing.
 ## 5. Health Connect
 
 - Connecting Health Connect is optional and controlled by you in system permission screens  
-- Data from other health apps appears in HRV by Akshay only if **you** make it available through Health Connect (or another path you enable) and grant the App permission  
+- Data from other health apps appears in Body Stress Meter only if **you** make it available through Health Connect (or another path you enable) and grant the App permission  
 - We do not claim ownership of Health Connect or other apps’ data  
 - Platform availability, sync delays, and partner-app policies are outside our control  
 
@@ -69,7 +69,7 @@ See our Privacy Policy for details on processing.
 
 ## 6. Not a medical device — important disclaimer
 
-**HRV by Akshay is for general wellness and fitness information only.**
+**Body Stress Meter is for general wellness and fitness information only.**
 
 It is **not**:
 
