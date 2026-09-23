@@ -1,22 +1,22 @@
-# Privacy Policy — HRV by Akshay
+# Privacy Policy — Body Stress Meter
 
 **Effective date:** 23 September 2026  
 **Last updated:** 23 September 2026  
-**App:** HRV by Akshay
+**App:** Body Stress Meter
 
-This Privacy Policy explains how **HRV by Akshay** (“we,” “us,” or “the App”) handles information when you use the App.
+This Privacy Policy explains how **Body Stress Meter** (“we,” “us,” or “the App”) handles information when you use the App.
 
 **Your HRV · your data · download anytime.**
 
 **Important:** We do **not** collect your HRV, heart rate, inter-beat intervals, stress scores, tags, notes, or other health readings onto our servers. That information stays on **your devices** (and in optional exports or backups **you** choose). We do not operate a health-data cloud account that receives your measurements by default.
 
-HRV by Akshay is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, or data that may originate from Samsung Health), it does so only with permissions **you** grant.
+Body Stress Meter is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, or data that may originate from Samsung Health), it does so only with permissions **you** grant.
 
 ---
 
 ## 1. Who this applies to
 
-This policy applies to people who install and use the HRV by Akshay Android phone app, and — if available on your device — any optional companion watch app that syncs measurements with the phone.
+This policy applies to people who install and use the Body Stress Meter Android phone app, and — if available on your device — any optional companion watch app that syncs measurements with the phone.
 
 ---
 
@@ -74,7 +74,7 @@ If you use fingertip / camera measurement:
 
 ### 3.4 What we do **not** require by default
 
-HRV by Akshay does **not** require you to create a cloud account to measure HRV.  
+Body Stress Meter does **not** require you to create a cloud account to measure HRV.  
 Core history is stored **locally** on your phone (and related local archives or exports **you** trigger).
 
 If you enable an optional cloud or file backup, or use Android’s system backup (`allowBackup`), that copy lives in **your** chosen storage or Google account — not as our advertising database. Sharing via the Android share sheet is always **user-initiated**.
@@ -109,7 +109,7 @@ We do **not** share your health data with data brokers.
 
 - Connecting **Health Connect** is optional. You control which permissions the App receives in Android / Health Connect settings.
 - Data in Health Connect may come from other apps **you** choose (for example Samsung Health); those apps have their own privacy policies.
-- HRV by Akshay currently requests Health Connect **read** access for: **Sleep**, **Resting heart rate**, and **Heart rate** — to show overnight context and all-day heart rate in the App. We do not claim these as clinical sleep-quality scores or medical screening.
+- Body Stress Meter currently requests Health Connect **read** access for: **Sleep**, **Resting heart rate**, and **Heart rate** — to show overnight context and all-day heart rate in the App. We do not claim these as clinical sleep-quality scores or medical screening.
 - You can revoke Health Connect permissions at any time. After revoke, the App will stop reading new Health Connect data for those permissions.
 
 ---
@@ -156,7 +156,7 @@ If applicable law gives you additional rights (access, deletion, portability), c
 
 ## 9. Children
 
-HRV by Akshay is not directed at children under 13 (or the higher minimum age required in your country). Do not use the App if you are under that age.
+Body Stress Meter is not directed at children under 13 (or the higher minimum age required in your country). Do not use the App if you are under that age.
 
 ---
 
@@ -174,7 +174,7 @@ We may update this Privacy Policy. We will change the “Last updated” date ab
 
 ## 12. Contact
 
-For privacy questions about HRV by Akshay:
+For privacy questions about Body Stress Meter:
 
 - **Contact email:** hrv_by_akshay@outlook.com
 
