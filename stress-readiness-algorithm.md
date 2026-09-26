@@ -1,5 +1,8 @@
 # Personalized Freshness-Aware Stress & Readiness Algorithm
 
+> **Disclaimer — not a scientific or medical claim.**  
+> This document describes a **wellness estimate** for personal insight only. It is **not** a medical device, **not** a diagnosis, and **must not** be used to make medical decisions. Scores are approximate; they do not replace professional clinical judgment. Research citations below motivate design choices — they do **not** validate clinical use of this algorithm.
+
 ## Base Specification v0.1
 
 ### 1. Purpose
@@ -2522,3 +2525,14 @@ They all go through the **same state engine**, but each user's estimate has a di
 Most importantly, the system never has to pretend that unavailable information exists.
 
 That is the core design I would use as the foundation for the actual implementation and eventual open-source specification.
+
+
+---
+
+# Suggestions & feedback
+
+If you have ideas to improve this stress & readiness algorithm — clearer inputs, better fusion rules, edge cases we miss, or research we should weigh — we would love to hear from you.
+
+**Email:** [hrvbyakshay@gmail.com](mailto:hrvbyakshay@gmail.com)
+
+Please include what you observed (or what you would change) and, if useful, which signals you use (HRV, sleep, workouts, etc.). Wellness discussion only — not medical advice.
