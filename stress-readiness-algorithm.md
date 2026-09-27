@@ -5,7 +5,7 @@
 
 ## Base Specification v0.1 (with v0.2 addenda)
 
-> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26). They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -1901,6 +1901,14 @@ A familiar initial prior could use approximately:
 
 but those should be treated only as **initialization priors**, then personalized.
 
+### A light session can still be visible **(v0.2.2)**
+
+The fast load sum barely notices a short walk, because usual load for an active person is far larger than one easy session. From v0.2.2 the engine adds a separate, small fatigue nudge so that a real walk is not invisible:
+
+* A session **shorter than 12 minutes** is left out of the load sum. A 5-minute workout does not move Ready, Stress, Energy, or Recovery.
+* From 12 minutes up to **20 minutes**, a smooth ramp reaches **5 fatigue points**, then fades with a **4-hour** half-life. Readiness uses a quarter of fatigue, so a 20-minute walk is about **1–2 points** on Ready and about **1 point** on Energy.
+* A session whose internal load is **60 or more** keeps the existing hard-session bump (at least 6 fatigue points, up to 15, same 4-hour half-life). The light nudge and the hard bump do not add.
+
 ---
 
 # 53. Do not use ACWR as the core readiness equation
@@ -2698,9 +2706,15 @@ The first day of v0.2 in use surfaced the case the fusion rule did not cover: th
 13. **§56 — Rule G.** A restorative, recorded night lifts readiness beyond the linear blend (≈ 0.6 points per recovery point above 65, scaled by how certain the night is, cap 12, fading over ≈ 10 h awake). Worked case: overnight 57 → 6 h morning 60 → 7 h morning 70.
 14. **§26 — disagreement is between measurements.** Dispersion is computed among measured signals around their own mean; a single reading is not "inconsistent" for being far from the prior, and derived inferences are not parties to a disagreement.
 
+### v0.2.2 — a light session can show
+
+A 10-minute walk was leaving every score unchanged, because one easy session is small next to usual load. v0.2.2 adds a short-lived nudge without retuning the rest of the model.
+
+15. **§52 — light sessions.** Under 12 minutes: no load and no nudge, so a 5-minute workout does not move the four scores. At 20 minutes the nudge is 5 fatigue points (about 1–2 on Ready, about 1 on Energy) and halves every 4 hours. Load of 60 or more still uses the hard-session bump only.
+
 ### What did not change
 
-The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, the training-load model, baseline maturity, and the invariants of §70. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
+The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, the training-load model apart from the v0.2.2 light-session nudge, baseline maturity, and the invariants of §70. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
 
 ---
 
