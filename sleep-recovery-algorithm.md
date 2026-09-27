@@ -1,155 +1,188 @@
-# Overnight recovery score
+# Overnight Recovery Score — Expanded Algorithm
 
 > **Disclaimer — not a scientific or medical claim.**
-> This page describes a **wellness estimate** for personal insight. It is **not** a clinically validated algorithm, **not** a medical device, and **not** a diagnosis. It must not be used to make medical decisions. The numbers below are the rules the app actually uses. Research ranges motivate those rules. They do not validate clinical use.
+> This page describes a **wellness estimate** for personal insight. It is **not** a clinically validated algorithm, **not** a medical device, and **not** a diagnosis. It must not be used to make medical decisions. It is separate from the [Stress & Readiness](stress-readiness-algorithm.html) engine.
 
-This is the number on the sleep card: **0–100**, with a label of Needs rest, Still catching up, Steady overnight, or Strong overnight.
+## 1. Purpose
 
-It is a different number from [Stress & Readiness](stress-readiness-algorithm.html). Readiness is the latent-state engine. This page is only “how restored does last night look, after yesterday.”
+The Overnight Recovery Score is a 0–100 wellness estimate answering:
 
-The night score itself is an English description of a Kotlin port of the MIT-licensed sleep score in [IntervalsWellnessSync](https://github.com/ryangrg/intervalswellnesssync-hrv-sleep-score-algorithms) (`SleepScoreCalculator.swift`), with the changes in the last section.
+**“After yesterday’s load, how restored does last night look?”**
 
----
+The algorithm is designed to be primarily driven by the most recent recorded sleep period.
 
-## 1. What the card is answering
+It uses the following principles:
 
-One question:
-
-**After yesterday’s load, how restored does last night look?**
-
-The answer is built in two steps.
-
-1. Score the night itself: duration, restorative stages, continuity, time asleep in bed, and sleeping heart rate when we have it.
-2. Nudge that score a little for yesterday: a personal step comparison, an unusually hard or long session, and a small autonomic signal.
-
-The result is clamped to 0–100.
-
-| Score | Label | Plain reading |
-| --- | --- | --- |
-| 75–100 | Strong overnight | Mostly restored |
-| 55–74 | Steady overnight | Everyday pace usually works |
-| 35–54 | Still catching up | Keep some margin |
-| 0–34 | Needs rest | Overnight restore looks limited |
-
-If there is no sleep duration and no autonomic reading, the card does not invent a score. It waits for data.
+1. The night itself should determine most of the score.
+2. Previous-day activity should provide context, not dominate the result.
+3. Personal history should gradually become more important as enough data accumulate.
+4. Missing data must not automatically become negative data.
+5. The same physiological event should not be penalized multiple times.
+6. A small change in the user's recent behavior should be capable of producing a small change in the score without causing large swings.
+7. The score is an estimate for wellness and personal insight, not a clinically validated measurement.
 
 ---
 
-## 2. Which night
+# 2. Select the Sleep Period
 
-“Last night” is the latest day in Health Connect that actually has sleep, looking at today first and then yesterday. Noon does not wipe a recorded night.
+Use the most recent valid sleep period available in Health Connect.
 
-Minutes on the card (sleep, deep, REM, steps) are the recorded values. They are not themselves the score.
+Check today's recorded data first. If no valid sleep period exists for today, check yesterday.
+
+The date changing at midnight or noon must not invalidate a sleep period that belongs to the previous night.
+
+Use the actual recorded values for:
+
+* sleep duration
+* bedtime
+* wake time
+* awake periods
+* awakenings
+* deep sleep
+* REM sleep
+* light sleep
+* sleeping heart rate
+* other available overnight physiological signals
+
+Never create a value simply because a metric is missing.
+
+A nap does not rewrite this night. Naps belong to the separate readiness engine as something that happens after the night.
 
 ---
 
-## 3. The night score
+# 3. Overall Architecture
 
-Each part is itself 0–100. They are then weighted.
+The algorithm has three layers.
 
-**When sleeping heart rate is available**
+### Layer 1 — Night Quality
 
-| Part | Weight |
-| --- | --- |
-| Duration | 30% |
-| Restorative stages (deep and REM) | 25% |
-| Continuity | 20% |
-| Efficiency | 15% |
-| Sleeping heart rate | 10% |
+First calculate how good the recorded sleep itself looks.
 
-**When sleeping heart rate is missing**
+Use:
 
-The heart-rate share is dropped and the other weights are renormalized: duration 34%, stages 28%, continuity 22%, efficiency 16%.
+* Sleep duration
+* Sleep stages
+* Sleep continuity
+* Sleep efficiency
+* Sleeping heart rate
 
-A missing part is a **neutral 70**, not a zero, except where a section below says otherwise. Zero means “we measured none of this.” Missing means “we do not know.”
+These are the existing core components.
 
-### 3.1 Duration
+### Layer 2 — Recent Recovery Context
 
-Hours asleep, not time in bed.
+Then consider whether the person entered the night with additional recovery demand based on:
 
-| Hours asleep | Duration score |
-| --- | --- |
-| 7 to 9 | 100 |
-| 9 to 10 | falls by 20 points per extra hour (90 at 9.5 h, 80 at 10 h) |
-| above 10 | starts at 80 and falls by 15 points per extra hour, and does not go below 50 |
-| 6 to 7 | falls by 40 points per hour short of 7 (60 at 6 h) |
-| 5 to 6 | falls by 30 points per hour short of 6 (30 at 5 h) |
-| under 5 | starts at 30 and falls by 15 points per hour short of 5, down to 0 |
+* Recent sleep debt
+* Yesterday's unusual activity
+* Yesterday's unusually high training load
+* Recent autonomic state
+* Recent sleep consistency
 
-### 3.2 Restorative stages
+These factors should modify the night score only slightly.
 
-Deep and REM are each scored as a percent of time asleep, then averaged. Light sleep is shown on the card and is **not** part of this score.
+### Layer 3 — Confidence and Stability
 
-Targets used here, as commonly cited ranges, not as a clinical cutoff:
+Finally determine:
 
-- Deep: about 13–23% of the night
-- REM: about 20–25% of the night
+* How much data support the score
+* Whether the current result is consistent with recent nights
+* Whether a change is large enough to be meaningful
 
-**Deep**
+Confidence affects how the result is presented and how aggressively the algorithm allows the score to move. It does not turn missing data into bad sleep.
 
-| Share of the night | Score |
-| --- | --- |
-| 13–23% | 100 |
-| 10–13% | 70, rising by 10 points per extra percent |
-| under 10% | 7 points per percent (0 at 0%) |
-| 23–30% | 100, falling by 5 points per extra percent |
-| above 30% | 50 |
+---
 
-**REM**
+# 4. Existing Night Score
 
-| Share of the night | Score |
-| --- | --- |
-| 20–25% | 100 |
-| 15–20% | 60, rising by 8 points per extra percent |
-| under 15% | 4 points per percent (0 at 0%) |
-| 25–35% | 100, falling by 3 points per extra percent |
-| above 35% | 50 |
+Keep the current night-score structure as the foundation.
 
-If only deep was recorded, only deep is scored. If only REM was recorded, only REM is scored. If neither was recorded, the stage part stays at **70**, even when light sleep is present. A watch that never wrote deep or REM is not treated as a night with no deep and no REM.
+When sleeping heart rate is available:
 
-If deep or REM was recorded as zero minutes, that zero is real and scores as 0% for that stage.
+* Duration: 30%
+* Restorative stages: 25%
+* Continuity: 20%
+* Efficiency: 15%
+* Sleeping heart rate: 10%
 
-### 3.3 Continuity
+When sleeping heart rate is unavailable, remove its weight and renormalize the remaining components: duration 34%, stages 28%, continuity 22%, efficiency 16%.
 
-Starts at 100 when we know the night was quiet.
+A missing component is not automatically a zero.
 
-- Each significant awakening costs **20** points.
-- Each minute awake during the night costs **0.5** points.
+A missing metric means:
 
-A significant awakening is a mid-night awake block of at least 2 minutes, ignoring the few minutes at falling asleep and at waking.
+**“We do not know.”**
 
-If we know the count but not the minutes, only the count is charged. The app does **not** invent extra wake minutes from the count. Charging both would punish the same awakening twice.
+A recorded zero means:
 
-If we know neither the count nor the awake minutes, continuity stays at the neutral **70**.
+**“The source explicitly reported zero.”**
 
-### 3.4 Efficiency
+This distinction must remain throughout the engine.
 
-Efficiency is time asleep divided by time in bed (bedtime to wake, which includes time awake in bed).
+A night longer than 18 hours, or a stage total more than 15% above time asleep, is treated as bad data. The impossible part is ignored. The rest of the night is still scored.
 
-| Efficiency | Score |
-| --- | --- |
-| 90% or more | 100 |
-| 85–90% | 80, plus 4 points per extra percent |
-| 75–85% | 50, plus 3 points per extra percent |
-| under 75% | about two-thirds of the efficiency percent |
+---
 
-If bedtime or wake time is missing, efficiency stays at **70**.
+# 5. Sleep Duration
 
-### 3.5 Sleeping heart rate
+Calculate duration from actual time asleep.
 
-Only the average heart rate **during the night** is used. Daytime resting heart rate is not a stand-in. If the night has no sleeping heart rate, this part is omitted and the other weights grow, as in the table above.
+Do not confuse time asleep with time in bed.
 
-**When five earlier nights have a sleeping heart rate**, tonight is compared with the median of those nights (the personal usual rate).
+The duration curve is smooth. Crossing 7.00 hours does not jump the score.
 
-| Tonight versus your usual sleeping heart rate | Score |
-| --- | --- |
-| at or below usual | 100 |
-| up to 3 bpm higher | 100, minus 3 points per bpm |
-| 3 to 6 bpm higher | 91, minus 5 points per bpm past 3 |
-| 6 to 10 bpm higher | 76, minus 5 points per bpm past 6 |
-| more than 10 bpm higher | 56, minus 3 points per bpm past 10, and not below 10 |
+* From 7 to 9 hours, duration is 100.
+* Under 7 hours, the score is `100 × e^(−0.48 × hours short of 7)`. A 6-hour night is about 62. A 4-hour night is under 30. Short sleep still matters a lot.
+* Over 9 hours, the score eases toward 82 and stops falling: `82 + 18 × e^(−extra hours / 2.5)`. A 12-hour night stays above 80. Extra sleep is not treated as poor sleep.
 
-**Without five earlier nights**, a population ladder is the fallback:
+---
+
+# 6. Sleep Architecture
+
+Deep and REM are scored when they were recorded. Light sleep is shown and is not an extra plus or minus.
+
+* Missing deep sleep is not zero deep sleep.
+* Missing REM sleep is not zero REM sleep.
+* A recorded zero remains a real zero.
+* If only one of deep or REM was recorded, only that one is scored.
+* If neither was recorded, the stage part stays at a neutral 70, even if light sleep is present.
+
+Textbook bands still exist (deep about 13–23%, REM about 20–25%). When at least five earlier nights have that stage, the person's own median share also counts. A night inside about 4 points of that usual share scores as a normal stage night. The better of “usual for you” and “inside the textbook band” is used, so a personal pattern is not punished for missing a textbook percentage.
+
+The stage result is then pulled 40% of the way back toward 70. One odd deep or REM reading can soften the night. It cannot by itself turn an otherwise normal night into a very poor one.
+
+---
+
+# 7. Sleep Continuity
+
+Awake minutes are the main fragmentation signal: 0.8 points per minute awake.
+
+Awakening count is secondary:
+
+* When awake minutes are also known, each awakening costs 6 points.
+* When only the count is known, each awakening costs 12 points.
+* The count is never turned into invented awake minutes.
+
+Unknown continuity stays at 70. A measured quiet night stays at 100.
+
+A long single awakening and many short awakenings therefore do not score the same, and the same awake period is not charged twice at full strength.
+
+---
+
+# 8. Sleep Efficiency
+
+Sleep efficiency is time asleep divided by time in bed.
+
+If bedtime or wake time is missing, efficiency stays at the neutral 70. It is not zero.
+
+When both continuity and efficiency were actually measured, their penalties are capped together: keep the larger penalty, plus 35% of the smaller one. One fragmented night cannot take two full penalties for the same wakefulness.
+
+---
+
+# 9. Personal Sleeping Heart Rate
+
+Only the average heart rate during the night is used. Daytime resting heart rate is not a substitute. Values outside 28–120 bpm are ignored.
+
+Until five earlier nights exist, a population ladder is the fallback:
 
 | Sleeping heart rate | Score |
 | --- | --- |
@@ -159,97 +192,218 @@ Only the average heart rate **during the night** is used. Daytime resting heart 
 | 61–65 | 70 |
 | 66–70 | 55 |
 | 71–75 | 40 |
-| above 75 | 40, minus 2 points per bpm past 75, and not below 10 |
+| above 75 | 40, minus 2 points per bpm, and not below 10 |
 
-The personal comparison exists because a sleeping heart rate of 62 can be an ordinary night for one person and a high night for another. The population ladder remains only until there is enough of your own history.
+From five nights onward, the median of up to 14 earlier nights becomes the personal usual rate. The personal curve takes over gradually and is fully personal at 14 nights. At or below that usual rate scores 100. Each beat above it costs a little, on the same steps as before (3, then 5, then 5, then 3 points per bpm).
+
+The heart-rate component cannot fall below 25, so one unusual night cannot overpower duration and continuity. Its weight in the night score is 10%.
 
 ---
 
-## 4. From the night score to the card
+# 10. Sleep Debt
 
-The card starts at the night score, then applies three small adjustments. They are nudges. The night still owns the number.
+Recent sleep debt is not a second duration score.
 
-### 4.1 Autonomic nudge
+It looks at other nights in the previous 14 days, needs five of them, and compares them with the median of those nights. More recent shortfalls count more. The weight of a night is `e^(−days ago / 4)`.
 
-If there is a recent readiness reading, or otherwise an overnight HRV value:
+The scored night itself is not included, so last night is not punished twice.
 
-| Signal | Points |
+The adjustment is about 1.3 points per hour of that weighted gap, clamped to **−4 to +2**.
+
+A good night after a short week stays a good night. The debt line only acknowledges that recovery may still be incomplete.
+
+---
+
+# 11. Sleep Timing Regularity
+
+Usual bedtime and usual wake time are the circular medians of up to 14 earlier nights that have both timestamps. Five nights are required.
+
+The worse of tonight's bedtime gap and wake-time gap is used:
+
+| Gap from your usual | Points |
 | --- | --- |
-| Ready | +6 |
-| Settled | +3 |
-| Soft | 0 |
-| Rest | −5 |
+| 45 minutes or less | 0 |
+| up to 90 minutes | −1 |
+| up to 150 minutes | −2 |
+| more than that | −3 |
 
-### 4.2 Yesterday’s steps, versus you
+This is a consistency nudge, not a claim that one late night is unhealthy.
 
-Steps move the score only when yesterday was unusual compared with your own median over the previous three weeks (at least five days, and yesterday itself is not part of that median). Within about 25% of your usual day, the change is zero.
+---
 
-| Yesterday ÷ your usual | Points |
+# 12. Recent Sleep Trend
+
+If at least three recent nights exist, and tonight's duration is within 25 minutes of their median duration, a night-score jump larger than 15 points is treated as likely noise. Only 55% of that jump is kept.
+
+If the duration actually changed, the new score is left alone. The trend check is not a cosmetic smoother.
+
+---
+
+# 13. Yesterday's Steps
+
+Steps are compared with the person's own median over about three weeks, excluding yesterday, and only when five days exist.
+
+A day within about 25% of usual does not move the score. A 12,000-step day is neutral if 12,000 is normal.
+
+| Yesterday ÷ usual | Points |
 | --- | --- |
-| 1.75 or more | −10 |
-| 1.45–1.75 | −6 |
-| 1.25–1.45 | −3 |
+| 1.75 or more | −6 |
+| 1.45–1.75 | −4 |
+| 1.25–1.45 | −2 |
 | 0.75–1.25 | 0 |
 | 0.55–0.75 | +1 |
-| under 0.55 | +3 |
+| under 0.55 | +2 |
 
-A 12,000-step day is neutral if 12,000 is normal for you.
+A quiet day is only a very small plus. It is not a recovery bonus.
 
-### 4.3 Yesterday’s training
+---
 
-Ordinary training does not tax the card. Only a notably hard or long day does.
+# 14. Yesterday's Training
 
-A session counts as hard when it lasted at least 25 minutes, or when the type is something like a run, ride, swim, row, strength session, or intervals.
+Exercise type is not treated as inherently hard. A run, a lift, and a walk are not taxed because of their names.
 
-| Yesterday | Points |
+Only an unusually long day moves the score:
+
+| Yesterday's total training | Points |
 | --- | --- |
-| Hard session totaling 75 minutes or more | −8 |
-| Hard session totaling 50–74 minutes | −5 |
-| Hard session totaling 35–49 minutes | −3 |
-| Any movement totaling 90 minutes or more, if the row above did not already apply | −4 |
-| Otherwise | 0 |
+| under 60 minutes | 0 |
+| 60–74 minutes | −1 |
+| 75–99 minutes | −2 |
+| 100 minutes or more | −4 |
 
-The final card score is the night score plus these three nudges, clamped to 0–100.
-
-The deep/REM and continuity lines inside the night detail are explanations of parts already inside the night score. They are not added a second time.
+A normal session does not rewrite the night.
 
 ---
 
-## 5. Worked example
+# 15. Overnight Autonomic Context
 
-Eight hours asleep. Deep 18% (inside 13–23). REM 22% (inside 20–25). One mid-night awakening and 10 minutes awake. Efficiency 92%. Sleeping heart rate 58, and your usual from earlier nights is 60.
+The readiness engine's output is not fed back into this score. That would count the night twice.
 
-- Duration: 100
-- Stages: deep 100, REM 100, average 100
-- Continuity: 100 − 20 − (10 × 0.5) = 75
-- Efficiency: 100
-- Heart rate: 2 bpm under your usual, so 100
+When overnight HRV exists, it is compared with the median of up to 14 earlier nights (five required):
 
-With heart rate present:
+| Tonight ÷ your usual HRV | Points |
+| --- | --- |
+| 1.12 or more | +2 |
+| 1.04–1.12 | +1 |
+| 0.92–1.04 | 0 |
+| 0.80–0.92 | −1 |
+| 0.68–0.80 | −2 |
+| below 0.68 | −3 |
 
-0.30×100 + 0.25×100 + 0.20×75 + 0.15×100 + 0.10×100 = **95**
-
-Yesterday was a normal step day (0) and not a long hard session (0). The latest autonomic signal is Settled (+3).
-
-Card: 95 + 3 = **98**, which is Strong overnight.
-
-A different person with the same 58 bpm, but no five-night history, would use the population ladder (85 at 58 bpm) instead of 100. The rest of the night would be unchanged.
+If the sleeping-heart-rate component is already below 75, a negative HRV nudge is halved. The same elevation is not charged in full twice.
 
 ---
 
-## 6. What this version changed
+# 16. Recent Physiological Direction
 
-Three rules were tightened so missing data stops pretending to be a bad measurement.
+When at least six earlier nights have a sleeping heart rate, the older half is compared with the newer half.
 
-1. **Missing deep or REM is not zero.** Only a recorded stage is scored. Light-only nights stay on the neutral stage prior.
-2. **One awakening is one penalty.** If we do not have awake minutes, we do not invent them from the wake count.
-3. **Sleeping heart rate is personal once we know you.** Five earlier nights switch the score from a population ladder to “tonight versus your usual.” Daytime resting heart rate is no longer used as if it were a sleeping heart rate. Until those five nights exist, the population ladder remains.
+If heart rate is up by 4 bpm or more and HRV is down by about 8% or more, the context is **−2**.
+
+If heart rate is down by 3 bpm or more and HRV is up by about 8% or more, the context is **+1**.
+
+Otherwise this part is zero. It means the recent pattern looks different from the person's own earlier nights. It is not a diagnosis.
 
 ---
 
-## 7. What this is not
+# 17. Naps
 
-- Not a sleep-apnea test, not a diagnosis, and not a clinically validated sleep score.
-- Not the readiness, stress, energy, or recovery numbers from the [latent-state engine](stress-readiness-algorithm.html).
-- Not a claim that 13–23% deep or 20–25% REM is a personal medical target. Those ranges only set the shape of this wellness score.
-- Not a full copy of anyone else’s product. The duration, stage, continuity, efficiency, and population heart-rate curves follow the MIT sleep-score algorithm linked above. The personal heart-rate comparison, the missing-versus-zero stage rule, the single wake penalty, and the step and workout nudges are part of this app.
+A nap does not change the previous night's score. The overnight score describes the recorded night. A nap can still matter in the separate readiness engine, as a recovery event after the night.
+
+---
+
+# 18. Data Quality
+
+Impossible values are ignored rather than scored as terrible sleep:
+
+* sleep longer than 18 hours is not scored
+* negative durations are ignored
+* stage minutes more than 15% above time asleep are dropped, and the night is scored without stages
+* sleeping heart rate outside 28–120 bpm is ignored
+
+A night is not rejected just because an optional measurement is missing.
+
+---
+
+# 19. Confidence
+
+Confidence is “how much usable information do we have,” not “how good was the sleep.”
+
+If the night has duration but neither stages nor sleeping heart rate, context adjustments are halved. The night score itself is not reduced because data are thin.
+
+Missing stages are described as unavailable. They are not described as poor sleep.
+
+---
+
+# 20. Context Adjustment Limits
+
+All context together — debt, timing, steps, training, HRV, and multi-night direction — is clamped to **−8 to +4**.
+
+A poor 4-hour night stays poor. A strong 8-hour night stays strong. Context can refine the night. It cannot rewrite it.
+
+---
+
+# 21. Missing Data Handling
+
+**Missing is not zero.**
+
+If a metric is unavailable, the engine does not invent it, does not treat it as bad, drops or neutralizes that part, and lowers how hard secondary signals may push. A recorded zero is still a real zero.
+
+---
+
+# 22. Anti-Double-Counting Rules
+
+* Awake time and efficiency share one capped penalty.
+* Sleeping heart rate and overnight HRV do not both take a full penalty for the same bad night.
+* Last night's duration and recent sleep debt are different time scales. Debt stays inside −4 to +2 and excludes the scored night.
+* A composite readiness score is not an input here.
+
+---
+
+# 23. Responsiveness
+
+Meaningful changes in the night move the score. Tiny differences do not jump it, because the duration curve is smooth, stage influence is limited, and context is capped.
+
+The score is not held near yesterday when the night actually changed.
+
+---
+
+# 24. Final Calculation
+
+**Final score = night score + context adjustments**
+
+Then clamp to 0–100.
+
+---
+
+# 25. Interpretation
+
+**75–100 — Strong overnight.** Mostly restored.
+
+**55–74 — Steady overnight.** Everyday pace usually works.
+
+**35–54 — Still catching up.** Keep some margin.
+
+**0–34 — Needs rest.** Overnight restoration looks limited.
+
+These are wellness descriptions, not medical classifications.
+
+If there is no recorded sleep, the card waits. It does not invent a score from a readiness number.
+
+---
+
+# 26. Explanation Shown to the User
+
+The detail text says what the night was made of, and it says when stages were missing so they were not treated as poor sleep.
+
+Lines that did not change the score are not presented as point changes. Context lines show the small adjustment they actually applied.
+
+---
+
+# 27. What the Expanded Algorithm Is Designed to Achieve
+
+Duration stays important. Stages stay available when the device provides them, without dominating. Continuity stays meaningful. Efficiency stays descriptive. Sleeping heart rate becomes personal as history grows. Yesterday stays contextual. Missing data do not become zeros.
+
+The expansion adds cumulative recent sleep debt, personal sleep-timing consistency, a recent-night stability check, stronger personal baselines, multi-night physiological direction, a limit on thin-data context, anti-double-counting, smoother duration, and a hard separation from the readiness score.
+
+**Measure the night first. Understand it using the person's history. Use yesterday for context. Use physiology for refinement. Never let a secondary or noisy signal overpower the main sleep measurements.**
