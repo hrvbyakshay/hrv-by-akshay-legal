@@ -5,7 +5,7 @@
 
 ## Base Specification v0.1 (with v0.2 addenda)
 
-> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem. They refine the base specification without changing its principles; the complete list of v0.2 changes is collected in the *"v0.2 addenda"* section near the end.
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26). They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -584,9 +584,22 @@ Example: watch 6 h 00 (sd 25) + user "7 h" (sd 20) → fused **≈ 6 h 37 min, s
 
 If the two disagree by more than about 90 minutes the fused sd is **widened**, not narrowed — the disagreement is itself information that one source is wrong — and the explanation layer says so: "Watch 5 h 10 m, you reported 8 h — these differ; using a blend."
 
+### Two different claims: a total and an addition **(v0.2.1)**
+
+"I slept 7 hours" and "add the hour the watch missed" are not the same sentence, and a fusion rule that treats them the same gets one of them badly wrong. Blending "1 h" against a 6 h device record as if both described the whole night would *shorten* the night to about 3 h — the opposite of what was meant.
+
+The engine therefore distinguishes:
+
+* **Total** — "the night was N hours". Fused with the device record by precision weighting as above; several totals for one night collapse to the latest.
+* **Addition** — "the tracker stopped at the 09:00 bathroom break; I slept another hour". This is a *segment the device missed*, not a competing estimate. It is **appended** to the tracked night (or prepended, if it was entered before the tracked segment ended), with its own small uncertainty (≈ 15 min), and — crucially — it **moves the night's end**. The user's real wake time is when the added sleep ended, so hours awake, sleep inertia and homeostatic pressure all follow it.
+
+The input dialog asks which is meant. When an entry arrives unlabeled, a figure at most half the tracked total (and at most 3 h) is read as an addition; anything larger is a total. Nobody corrects a six-hour record to "one hour".
+
+Example: watch 6 h 00 closed at 09:00 + "add 1 h" saved at 10:05 → night = **7 h 00**, ends ≈ 10:05, explanation "Slept 7 h 0 m last night (watch 6 h 0 m + 1 h 0 m you added)".
+
 ### Consequence
 
-A one-hour correction now produces a *small, positive* change in sleep recovery and readiness, applied to last night, with no change to wake time, hours awake, inertia or pressure. That is what the user meant.
+A correction of last night now produces the change the user meant, applied to the night they meant: a total nudges the duration; an addition extends it and shifts the wake time; neither creates a phantom sleep episode at save time.
 
 ---
 
@@ -1033,6 +1046,13 @@ The posterior state becomes less certain where the observations conflict.
 
 This is one of the most important benefits of treating readiness as a multidimensional state rather than a single weighted sum.
 
+### What counts as disagreement **(v0.2.1)**
+
+Disagreement is measured **between measured signals** — the weighted spread of measurements around their own weighted mean. Two consequences follow:
+
+* One measurement cannot disagree with itself. A single fresh reading far from the prior is *informative*, not *inconsistent*; it must not be widened for being surprising.
+* Evidence *derived* from another state (sleep → autonomic recovery, sleep disruption → stress) is an inference, not a signal. It shifts the belief with its own modest weight, but it does not count as a party to a disagreement — otherwise a good night would make every low HRV reading look "inconsistent".
+
 ---
 
 # 27. Readiness calculation
@@ -1075,9 +1095,14 @@ A large physical-fatigue state should be able to materially suppress training re
 
 Likewise, poor current alertness should reduce "ready right now" without necessarily implying poor physiological recovery.
 
----
+### The morning after a full night **(v0.2.1)**
 
-# 28. Example: good HRV + good sleep + huge workout
+Readiness must *reset* after a restorative night. In the base blend sleep carries 20 % and the rest of the weight sits on states that, before the first measurement of the day, are still at their neutral priors — so a completed 7 h night could move readiness by only two or three points. Users reasonably read that as "sleep does not count". Two mechanisms fix it without touching the table in §23:
+
+* **Sleep informs autonomic recovery as inferred evidence.** Vagal tone is restored during sleep; until a real HRV reading arrives, last night is the best available proxy for the autonomic state. The inference has a fraction of a measurement's relevance (≈ 0.45), so a real reading always dominates it, and it decays over the day (half-life ≈ 8 h). It is labelled *inferred* in the explanation and is suppressed while tonight is only probable (§15a).
+* **Rule G** (§56) — a restorative night lifts readiness beyond the linear blend, the mirror image of Rule D.
+
+Worked case: 3 a.m. asleep, night not yet synced → readiness ≈ 57 (provisional). 10:30, a 6 h device record → 60. The same morning with the missed hour added (7 h, §14a) → **70**: sleep recovery 78, inferred autonomic 55, Rule G +6. A first HRV reading then takes over the autonomic term.
 
 User's normal workout load:
 
@@ -1938,7 +1963,7 @@ The two-process model provides the scientific foundation for the homeostatic and
 
 **Tracked + manual fusion.** Described in §14a: a manual entry is anchored to its night, adopts the tracked timing, and is precision-fused with the tracked total rather than replacing or being discarded.
 
-**Sleep need is personal *and* population-informed.** The target against which last night is judged blends the user's own habitual night (weight ≈ 0.65 once the baseline is mature) with the population need (≈ 7.5 h), bounded to 5.5–9.5 h. A chronic short sleeper is therefore *not* told that 5 h is "100 % of target", but is also not judged solely against a figure they never reach.
+**Sleep need is personal *and* population-informed.** The target against which last night is judged blends the user's own habitual night (weight ≈ 0.65 once the baseline is mature) with the population need (≈ 7.3 h), bounded to 5.5–9.5 h. A chronic short sleeper is therefore *not* told that 5 h is "100 % of target", but is also not judged solely against a figure they never reach.
 
 **Uncertainty is carried through.** The sd of the sleep-recovery estimate grows with the sd of the fused night duration, with the absence of efficiency/stage data, and with an immature baseline.
 
@@ -2007,6 +2032,10 @@ Persistent concordant abnormalities across HRV, RHR and subjective state should 
 ### Rule F
 
 A missing data source never automatically becomes a negative health signal.
+
+### Rule G **(v0.2.1)**
+
+A restorative night that has just ended lifts readiness beyond the linear blend — the positive counterpart of Rule D. It fires only for a *recorded* (or fused) night, not an assumed one, and never while tonight is only probable (§15a). The lift grows with sleep recovery above ≈ 65 (≈ 0.6 points per point, capped at 12) and is scaled by how certain the night's duration is (a user-estimated night earns less than a tracked one), and fades exponentially over the waking day (τ ≈ 10 h), because a good night's benefit is largest in the morning and is progressively spent as homeostatic pressure rebuilds.
 
 These interactions are more important than arguing whether HRV should be 28% or 31%.
 
@@ -2659,6 +2688,15 @@ The first release exposed one concrete failure that turned out to have several c
 
 9. **§61 — next-best input.** Effort normalised on a five-minute scale; a suspiciously short tracked night is a valid reason to ask for a sleep confirmation; nothing is asked while the user is probably asleep.
 10. **Explanations.** "Slept 6 h 37 m last night (watch 6 h 00 · you reported 7 h; combined)", nap lines, sleep-debt lines, watch-vs-user disagreement lines, and a provisional headline while probably asleep. The sleep dialog is pre-filled with the watch's figure so the user is *correcting* a number, not guessing one.
+
+### v0.2.1 — additions, and the morning reset
+
+The first day of v0.2 in use surfaced the case the fusion rule did not cover: the watch closed the night at a 09:00 bathroom break (6 h), the user slept another hour and logged "+1 h". Read as a *total*, that entry would have shortened the night to about 3 h.
+
+11. **§14a — total vs. addition.** A manual figure is either the night's total or a segment the tracker missed. Additions are appended to the device record with their own small uncertainty and move the night's end — the real wake time. The dialog asks which is meant; unlabeled small entries against a tracked night are additions.
+12. **§27 — sleep informs autonomic recovery.** Until the first HRV reading of the day, last night is inferred evidence for the autonomic state (relevance ≈ 0.45 of a measurement, half-life ≈ 8 h, labelled *inferred*).
+13. **§56 — Rule G.** A restorative, recorded night lifts readiness beyond the linear blend (≈ 0.6 points per recovery point above 65, scaled by how certain the night is, cap 12, fading over ≈ 10 h awake). Worked case: overnight 57 → 6 h morning 60 → 7 h morning 70.
+14. **§26 — disagreement is between measurements.** Dispersion is computed among measured signals around their own mean; a single reading is not "inconsistent" for being far from the prior, and derived inferences are not parties to a disagreement.
 
 ### What did not change
 
