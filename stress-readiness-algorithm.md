@@ -3,7 +3,9 @@
 > **Disclaimer — not a scientific or medical claim.**  
 > This document describes a **wellness estimate** for personal insight only. It is **not** a medical device, **not** a diagnosis, and **must not** be used to make medical decisions. Scores are approximate; they do not replace professional clinical judgment. Research citations below motivate design choices — they do **not** validate clinical use of this algorithm.
 
-## Base Specification v0.1
+## Base Specification v0.1 (with v0.2 addenda)
+
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem. They refine the base specification without changing its principles; the complete list of v0.2 changes is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -550,6 +552,44 @@ It should not manufacture a physiological deterioration merely because the senso
 
 ---
 
+# 14a. A manually entered night is a claim about a night, not a new sleep event **(v0.2)**
+
+When the user types "I slept 7 hours", the only thing they are asserting is a **duration for the most recent night**. They are *not* asserting that they fell asleep at the moment they opened the dialog.
+
+The base specification treated every sleep observation as an episode ending at its timestamp. For manual entries that timestamp is the *save time*, which produced three distinct errors whenever someone corrected their night in the evening:
+
+* a **phantom nap** ending "now" — sleep inertia at 22:00, hours-awake reset to zero, and homeostatic pressure collapsing to its post-sleep floor;
+* the manual figure **replaced** the tracked night instead of refining it (or, depending on the de-duplication rule, was silently discarded because a tracked night already existed);
+* an evening readiness that moved by several points for the wrong reason.
+
+The rule is therefore:
+
+### Anchor
+
+A manual sleep entry is attached to the **most recent habitual wake time at or before the time it was entered** (with a short grace period after waking, so an entry made at 07:05 for a 06:30 wake still refers to that morning). If the entry was made before that morning's habitual wake — say at 02:00 — it refers to the *previous* morning. If the user enters several values for the same night, the **latest entry wins**; corrections are corrections.
+
+### Adopt tracked timing when it exists
+
+If the tracker recorded any segment inside the core of that night (habitual bed → habitual wake, padded by a few hours), the manual entry inherits the **tracked start and end** and only its **duration claim** is kept. Without tracker data, the entry is placed so that it *ends* at habitual wake.
+
+### Fuse, don't replace
+
+Tracked total and manual total are two noisy measurements of the same quantity and are fused by precision weighting:
+
+> sd(tracked) ≈ 25 min with stage data, ≈ 35 min without, +10 min if the night was recorded as several segments;
+> sd(manual as a correction of a tracked night) ≈ 20 min — the user has seen the watch's figure and is disagreeing with it deliberately;
+> sd(manual with no tracker at all) ≈ 45 min.
+
+Example: watch 6 h 00 (sd 25) + user "7 h" (sd 20) → fused **≈ 6 h 37 min, sd ≈ 16 min**. The estimate moves *towards* the user, its uncertainty *shrinks* (two agreeing-ish sources), and nothing about the night's timing changes.
+
+If the two disagree by more than about 90 minutes the fused sd is **widened**, not narrowed — the disagreement is itself information that one source is wrong — and the explanation layer says so: "Watch 5 h 10 m, you reported 8 h — these differ; using a blend."
+
+### Consequence
+
+A one-hour correction now produces a *small, positive* change in sleep recovery and readiness, applied to last night, with no change to wake time, hours awake, inertia or pressure. That is what the user meant.
+
+---
+
 # 15. One subtle correction to the "30 hours since sleep" problem
 
 Suppose the last **known** sleep ended 30 hours ago, but the watch wasn't worn during the intervening night.
@@ -574,6 +614,39 @@ to update that belief.
 Otherwise the algorithm would create a huge false sleep-pressure state simply because a wearable wasn't worn.
 
 This is one of the reasons uncertainty is important.
+
+---
+
+# 15a. "Probably asleep": the hypothesis mixture during the habitual window **(v0.2)**
+
+Section 15 says the engine must not conclude "awake for 30 hours". v0.2 makes that operational, and it also answers a simpler question the base spec left open: **what should the scores do at 3 a.m. while the user is (probably) asleep and the night has not been synced yet?**
+
+### The hypothesis
+
+Whenever the current time is inside the user's habitual sleep window and **no sleep episode has been recorded for that window**, the engine carries two hypotheses:
+
+> H₁: the user went to sleep as usual;
+> H₀: the user is still awake.
+
+The probability of H₁ rises logistically after habitual bedtime (sleep-onset latency ≈ 20 min, then a ~30 min ramp) and falls again around habitual wake. Any **proof of wakefulness** inside the window — an HRV measurement, a workout, a self-report — resets the onset to *that* moment plus the latency, so a user measuring HRV at 01:30 is treated as awake at 01:30, not asleep since 23:00.
+
+If the window ends and a night is eventually recorded, the hypothesis disappears and the recorded night takes over (§14a). If the window ends and nothing is ever recorded, the hypothesis persists as **"probably slept, unrecorded"** and the sleep-recovery estimate blends towards the unknown prior with widened uncertainty — never towards zero sleep (§14).
+
+### What happens to each state
+
+* **Sleep pressure** — propagated as a *mixture*: the awake trajectory continues to rise, the asleep trajectory decays with the sleep time constant, weighted by P(H₁). The result *falls through the night* the way it should, with a wider posterior than a recorded night would give.
+* **Sleep inertia** — a mixture of "none" (awake) and the post-wake decay curve anchored at expected wake.
+* **Sleep recovery** — blends between the recorded-history estimate and the unknown prior (≈ 58, sd ≈ 24) by P(slept tonight).
+* **Circadian alertness** — unchanged; it is a function of clock time and habitual wake only.
+* **Stress and autonomic recovery** — unchanged by the hypothesis; they keep their own freshness decay.
+
+### What the user sees
+
+The headline is marked **"provisional — likely asleep"**, "Awake for N h" lines are suppressed, prompts for new inputs are silenced, and one *Unknown*-labelled line says: "Inside your usual sleep window with no recorded sleep — assuming you are asleep; scores will settle once the night syncs."
+
+### What the scores look like
+
+Under the base spec, at 02:00 with a habitual 23:00 bedtime and nothing synced, readiness sat around the low 50s and *fell steadily until morning* as pressure kept climbing (≈ 70 → 75 by 06:00), and the app might nudge the user to log sleep. Under v0.2 the same moment gives roughly the *same* number (readiness ≈ 53–55, energy ≈ 50) but now: pressure falls rather than rises, uncertainty is wider, the headline is provisional, and there is no prompt. In both versions the morning number is decided by the actual synced night and the first HRV measurement — the overnight estimate is intentionally *not* the interesting one.
 
 ---
 
@@ -1165,6 +1238,12 @@ and not be interpreted as psychological stress.
 The gate should gradually relax after the exercise session ends.
 
 This is particularly important because recent wearable-stress research demonstrates that exercise can be systematically misclassified as psychological stress.
+
+### Scope of the gate **(v0.2)**
+
+The gate exists because *physiology* is confounded by exercise. It must therefore apply **only to physiological observations** (HRV, resting HR, respiration, skin temperature). A **self-report** made during or just after a workout — "I feel very stressed" — is not confounded by exercise in the same way and must pass through at full strength; gating it would make the app deaf precisely when the user is telling it something.
+
+The relaxation curve is deliberately **convex** (approximately cubic in the elapsed fraction of the recovery window): HRV measured in the first half-hour after a session carries almost no psychological-stress information, and the weight is recovered mostly in the last third of the window. The practical target from §29 stands — the same HRV read *at rest* must land at least ~8 stress points above the *post-exercise* reading.
 
 ---
 
@@ -1853,6 +1932,22 @@ This is much more sophisticated than:
 
 The two-process model provides the scientific foundation for the homeostatic and circadian components.
 
+### v0.2 refinements to the sleep model
+
+**Nights, not episodes.** Trackers frequently split one night into several segments (a bathroom break, a re-sync). The engine first clusters segments into *nights* around the habitual window and works with the **night total**; short episodes outside the window are *naps* and feed pressure and inertia but not "last night". Personal sleep baselines are computed from night totals, so a fragmented night is not learned as two short nights.
+
+**Tracked + manual fusion.** Described in §14a: a manual entry is anchored to its night, adopts the tracked timing, and is precision-fused with the tracked total rather than replacing or being discarded.
+
+**Sleep need is personal *and* population-informed.** The target against which last night is judged blends the user's own habitual night (weight ≈ 0.65 once the baseline is mature) with the population need (≈ 7.5 h), bounded to 5.5–9.5 h. A chronic short sleeper is therefore *not* told that 5 h is "100 % of target", but is also not judged solely against a figure they never reach.
+
+**Uncertainty is carried through.** The sd of the sleep-recovery estimate grows with the sd of the fused night duration, with the absence of efficiency/stage data, and with an immature baseline.
+
+**Regularity widens the circadian estimate.** Schedule irregularity is the circular standard deviation of habitual wake times (so a 23:30/00:30 wobble is not mis-measured as a 23-hour spread). Irregular sleepers get a wider — less confident — circadian alertness estimate, because their acrophase is genuinely less certain.
+
+**Probable sleep.** During an unrecorded habitual window the engine runs the hypothesis mixture of §15a instead of assuming continuous wakefulness.
+
+**Recorded nights count immediately.** A night synced at 06:35 informs the 07:00 estimate; the short post-wake grace period only affects where a *manual* entry is anchored, not whether recorded data is used.
+
 ---
 
 # 55. Alertness model
@@ -1872,6 +1967,14 @@ from:
 > "currently alert."
 
 That distinction is one of the main differentiators of this design.
+
+### Shape of the circadian curve **(v0.2)**
+
+Circadian alertness is a 24-hour cosine peaking about 9.8 h after habitual wake (acrophase ≈ 16:15 for a 06:30 riser), plus a **12-hour harmonic** with amplitude ≈ 0.15:
+
+> C = (1 − h₂)·cos(φ) + h₂·sin(2φ)
+
+The *sign* of the harmonic matters: with sin(2φ) the curve dips about three hours *before* the acrophase — the well-known early-afternoon trough — and lifts about three hours *after* it, the evening "wake-maintenance zone". (An earlier draft used −cos(2φ), which mistakenly put the dip on top of the acrophase and depressed the whole afternoon.) The afternoon dip is the dominant effect; the evening lift is smaller because the primary cosine is scaled by (1 − h₂).
 
 ---
 
@@ -2054,6 +2157,12 @@ Examples:
 **Full questionnaire:** higher burden, use only when simpler options aren't sufficient.
 
 This should prevent the app from constantly interrogating the user.
+
+### v0.2 refinements
+
+* Effort is normalised against a **five-minute** scale — `gain / (1 + effort / 300 s)` — so that a 60-second HRV measurement and a 10-second sleep entry are compared on *information*, not on a ten-fold effort ratio that would always favour the cheaper action.
+* A **short-looking tracked night** (below ≈ 60 % of the personal target, with no manual figure yet) is a legitimate reason to ask the user to confirm their sleep — the watch may simply have missed part of it. Once the night is recorded and plausible, the morning HRV outranks a sleep confirmation.
+* No prompt is issued while the user is **probably asleep** (§15a).
 
 ---
 
@@ -2526,6 +2635,34 @@ Most importantly, the system never has to pretend that unavailable information e
 
 That is the core design I would use as the foundation for the actual implementation and eventual open-source specification.
 
+---
+
+# v0.2 addenda — what changed and why
+
+The first release exposed one concrete failure that turned out to have several causes. A user slept about seven hours; the watch recorded six; in the evening they typed "7 h" into the app and readiness moved from 51 to 57. The size of the change was not the problem — the *mechanism* was. Tracing it led to the following changes, all of which keep the base architecture intact.
+
+### Sleep
+
+1. **§14a — a manual night is a claim about a night.** Manual entries are anchored to the night they describe, adopt tracked timing when it exists, and are precision-fused with the tracked total (watch 6 h 00 sd 25 + user 7 h sd 20 → ≈ 6 h 37, sd ≈ 16). Later entries for the same night override earlier ones. Large disagreements widen uncertainty and are explained. The evening entry no longer creates a phantom sleep episode ending at save time.
+2. **§15a — probable sleep.** During an unrecorded habitual sleep window the engine carries an explicit "asleep / still awake" hypothesis mixture. Pressure, inertia and recovery are propagated as mixtures; the headline is marked provisional; prompts are silenced; proof of wakefulness inside the window resets the hypothesis.
+3. **§54 — nights, naps and fusion.** Segments are clustered into nights; naps are handled separately; baselines learn from night totals; the sleep-need target blends personal habit with population need; the sd of the fused night propagates into sleep recovery; recorded nights count immediately after waking.
+4. **§54 — regularity.** Wake-time irregularity is measured as a circular sd and widens the circadian estimate.
+5. **§55 — circadian harmonic sign.** The 12-hour harmonic now produces the early-afternoon dip and evening lift, instead of a trough on the acrophase.
+
+### Stress
+
+6. **§32 — gate scope and shape.** Only physiological observations are exercise-gated; self-reports pass at full strength. The gate's relaxation is convex (≈ cubic), so the first half-hour after exercise contributes almost nothing to psychological stress.
+7. **§31 — derived sleep→stress evidence is asymmetric.** A short night is moderately informative about stress (people who sleep badly are more often stressed); a good night is only weakly informative (well-rested people can still be stressed). The strength of this derived evidence is scaled down while last night is only probable, and derived evidence in general now carries its own freshness.
+8. **Tuning.** Stress observation noise reduced (22 → 16) and HRV→stress slope raised (14 → 16 points per z) so that a single clean resting HRV carries the weight §29 assumes.
+
+### Interaction
+
+9. **§61 — next-best input.** Effort normalised on a five-minute scale; a suspiciously short tracked night is a valid reason to ask for a sleep confirmation; nothing is asked while the user is probably asleep.
+10. **Explanations.** "Slept 6 h 37 m last night (watch 6 h 00 · you reported 7 h; combined)", nap lines, sleep-debt lines, watch-vs-user disagreement lines, and a provisional headline while probably asleep. The sleep dialog is pre-filled with the watch's figure so the user is *correcting* a number, not guessing one.
+
+### What did not change
+
+The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, the training-load model, baseline maturity, and the invariants of §70. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
 
 ---
 
