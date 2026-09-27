@@ -3,9 +3,9 @@
 > **Disclaimer — not a scientific or medical claim.**  
 > This document describes a **wellness estimate** for personal insight only. It is **not** a medical device, **not** a diagnosis, and **must not** be used to make medical decisions. Scores are approximate; they do not replace professional clinical judgment. Research citations below motivate design choices — they do **not** validate clinical use of this algorithm.
 
-## Base Specification v0.1 (with v0.2 addenda)
+## Base Specification v0.1 (with v0.2/v0.2.3 addenda)
 
-> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points; **(v0.2.3)** generalizes that into immediate, state-specific responses for meaningful events. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -1800,6 +1800,36 @@ That is the key relationship between state modeling and freshness.
 
 ---
 
+# 49a. Responsive state updates for meaningful events **(v0.2.3)**
+
+A continuously evolving state model must be responsive as well as persistent.
+
+The engine should not require a second physiological measurement before acknowledging a meaningful event that has already occurred. A completed night of sleep, a nap, the end of a workout, a walk, or a direct self-report can change one or more latent states immediately.
+
+> **The event updates the latent state; the score is then recomputed from the updated state.**
+
+It must not be an arbitrary `+2 Ready`, and it must not wait for the next HRV reading before anything changes.
+
+Each event has a set of states it can affect, a direction, a bounded magnitude, an onset and a decay. A short walk can create a small physical-fatigue effect and a short-lived alertness effect. A full restorative night can materially improve sleep recovery and reduce sleep pressure. A nap can reduce sleep pressure and improve later alertness, while sleep inertia may offset that benefit right after waking.
+
+### No final-score stickiness
+
+Readiness, energy and stress are not passed through a generic low-pass or deadband against the previous score. Integer rounding suppresses sub-point noise. A state transition larger than that noise floor is visible on the next evaluation.
+
+> **Meaningful event → immediate state update → immediate output recomputation.**
+
+### Double-counting protection
+
+If an event creates an inferred state change and a later direct measurement captures the same process, the measurement replaces the inference instead of adding a second independent effect.
+
+> Workout ends → inferred autonomic dip.
+
+> Later resting HRV → that dip is replaced by the reading. The two are not stacked.
+
+The same handoff applies to last night's inferred autonomic lift: until a morning HRV or heart-rate reading arrives, the night stands in for it; once the reading arrives, the inference yields and the reading keeps the certainty.
+
+---
+
 # 50. Freshness should therefore be state-specific
 
 The same HRV measurement can have different current relevance:
@@ -1901,13 +1931,21 @@ A familiar initial prior could use approximately:
 
 but those should be treated only as **initialization priors**, then personalized.
 
-### A light session can still be visible **(v0.2.2)**
+### Event-responsive training updates **(v0.2.3)**
 
-The fast load sum barely notices a short walk, because usual load for an active person is far larger than one easy session. From v0.2.2 the engine adds a separate, small fatigue nudge so that a real walk is not invisible:
+Training events update fatigue and adaptation when the event is recorded, rather than waiting for a later HRV measurement.
+
+For a completed hard workout, acute fatigue increases immediately, adaptation increases more slowly, and a temporary autonomic dip is inferred. That dip is not psychological stress. A later HRV or heart-rate reading replaces it.
+
+### A light session can still be visible **(v0.2.2, generalized by v0.2.3)**
+
+The fast load sum barely notices a short walk, because usual load for an active person is far larger than one easy session. The light-session rule is the same event mechanism, with these starting priors:
 
 * A session **shorter than 12 minutes** is left out of the load sum. A 5-minute workout does not move Ready, Stress, Energy, or Recovery.
-* From 12 minutes up to **20 minutes**, a smooth ramp reaches **5 fatigue points**, then fades with a **4-hour** half-life. Readiness uses a quarter of fatigue, so a 20-minute walk is about **1–2 points** on Ready and about **1 point** on Energy.
+* From 12 minutes up to **20 minutes**, a smooth ramp reaches **5 fatigue points**, then fades with a **4-hour** half-life. Readiness uses a quarter of fatigue, so a 20-minute walk is about **1–2 points** on Ready and about **1 point** on Energy. The same session can add a few subjective-energy points (a brief alertness lift, half-life about 2 hours). It does not raise recovery.
 * A session whose internal load is **60 or more** keeps the existing hard-session bump (at least 6 fatigue points, up to 15, same 4-hour half-life). The light nudge and the hard bump do not add.
+
+The same pattern, not a generic Ready bonus, covers sleep, naps, and direct self-report: each one updates the states it can actually affect, then fusion recomputes the scores.
 
 ---
 
@@ -2041,9 +2079,15 @@ Persistent concordant abnormalities across HRV, RHR and subjective state should 
 
 A missing data source never automatically becomes a negative health signal.
 
-### Rule G **(v0.2.1)**
+### Rule G **(v0.2.1, generalized by v0.2.3)**
 
-A restorative night that has just ended lifts readiness beyond the linear blend — the positive counterpart of Rule D. It fires only for a *recorded* (or fused) night, not an assumed one, and never while tonight is only probable (§15a). The lift grows with sleep recovery above ≈ 65 (≈ 0.6 points per point, capped at 12) and is scaled by how certain the night's duration is (a user-estimated night earns less than a tracked one), and fades exponentially over the waking day (τ ≈ 10 h), because a good night's benefit is largest in the morning and is progressively spent as homeostatic pressure rebuilds.
+A restorative night that has just ended is an immediate state transition — higher sleep recovery, lower sleep pressure, and an inferred autonomic lift until morning physiology arrives. The visible readiness lift is the consequence of that transition, not a standalone bonus.
+
+It fires only for a *recorded* (or fused) night, not an assumed one, and never while tonight is only probable (§15a). The existing prior is unchanged: sleep recovery above ≈ 65 lifts readiness by ≈ 0.6 points per point, capped at 12, scaled by how certain the night's duration is, fading over ≈ 10 h awake.
+
+### Rule H — meaningful events should produce proportionate state movement **(v0.2.3)**
+
+A new event changes the output promptly when, and only when, it changes a relevant latent state by more than the noise floor. The size depends on the event, its context, source quality, the person's current state, uncertainty, and overlap with evidence already incorporated. There is no rule that every logged action moves Ready by N points.
 
 These interactions are more important than arguing whether HRV should be 28% or 31%.
 
@@ -2404,6 +2448,20 @@ That is exactly how your initial engineering half-lives can eventually be replac
 
 ---
 
+# 68a. Validate responsiveness, not just stability **(v0.2.3)**
+
+For each event class, start from a fixed snapshot, inject the event, and recompute immediately. Relevant states should move in the expected direction, unrelated states should stay put, the response should be bounded and then decay, a later direct measurement should replace the inference rather than stack with it, and removing the event should return the no-event trajectory.
+
+Product checks:
+
+* A restorative night is visible in morning readiness without the first HRV reading.
+* A nap can improve alertness after sleep inertia fades, without rewriting last night.
+* A 20–30 minute walk is a small load change plus a short alertness lift, not a recovery bonus.
+* A hard workout raises acute fatigue immediately and does not become psychological stress.
+* "I feel stressed" and "I feel energetic" move those states without another sensor reading.
+
+---
+
 # 69. Validate context gating
 
 One specific experiment should test:
@@ -2443,6 +2501,14 @@ These should become hard product rules.
 ### Age modifies the prior; it should not directly subtract points.
 
 ### Experimental signals must earn their influence through validation.
+
+### Meaningful events should update relevant latent states immediately.
+
+### Event effects must be state-specific and bounded; they must not be cosmetic score bonuses.
+
+### Direct measurements should replace weaker event-derived inferences rather than be double-counted.
+
+### A responsive model should change when the underlying state changes, and stay put when only numerical noise changes.
 
 ---
 
@@ -2612,7 +2678,7 @@ The final algorithm can be summarized in English as follows:
 >
 > **Observations update only the latent states to which they are physiologically relevant. The same observation may therefore have different influence on autonomic recovery, physical fatigue, psychological stress or current alertness. Context gates prevent known physiological perturbations, such as exercise-related autonomic activation, from being incorrectly interpreted as psychological stress.**
 >
-> **Between observations, each state evolves according to an appropriate temporal model. Sleep pressure and circadian alertness use established sleep-regulation concepts; training fatigue and longer-term adaptation use individualized impulse-response concepts; autonomic and psychological states evolve according to observed personal dynamics.**
+> **Between observations, each state evolves according to an appropriate temporal model. Sleep pressure and circadian alertness use established sleep-regulation concepts; training fatigue and longer-term adaptation use individualized impulse-response concepts; autonomic and psychological states evolve according to observed personal dynamics. Meaningful completed events can also cause immediate, bounded, state-specific transitions; direct later measurements replace those event-derived updates rather than being added on top.**
 >
 > **Missing data produce uncertainty rather than a negative physiological signal. A stale measurement can continue contributing historical information while having reduced influence on current state estimation. The algorithm never interprets the absence of a measurement as evidence that the corresponding physiological condition is poor.**
 >
@@ -2712,9 +2778,20 @@ A 10-minute walk was leaving every score unchanged, because one easy session is 
 
 15. **§52 — light sessions.** Under 12 minutes: no load and no nudge, so a 5-minute workout does not move the four scores. At 20 minutes the nudge is 5 fatigue points (about 1–2 on Ready, about 1 on Energy) and halves every 4 hours. Load of 60 or more still uses the hard-session bump only.
 
+### v0.2.3 — general responsive event updates
+
+The sleep and light-session fixes were special cases of one gap: a meaningful event could sit in the log while the score waited for the next sensor sample.
+
+16. **§49a — event-conditioned transitions.** A completed event updates the latent states it can physiologically affect, then the scores are recomputed. Events are not Ready bonuses.
+17. **§52 — same mechanism for training.** A hard session raises acute fatigue immediately, adaptation moves more slowly, and an autonomic dip is inferred until a resting HRV or heart-rate reading replaces it. A 20-minute walk keeps the v0.2.2 fatigue nudge and can add a short alertness lift. It does not raise recovery.
+18. **§56 — Rule G kept; Rule H added.** The morning response after a restorative night is unchanged (the 7 h case still lifts readiness through sleep recovery, the inferred autonomic term, and Rule G). It is now one event transition among others. Rule H requires that movement to be proportionate to the state change.
+19. **Double-counting.** A later direct measurement replaces the event-derived inference. The reading keeps the certainty; the inference does not add a second penalty.
+20. **No output smoother.** Integer rounding hides sub-point noise. The previous snapshot is used only for the displayed delta.
+21. **§68a — replay tests.** Hold the sensor snapshot fixed, inject one event, and check direction, bounds, decay, and replacement.
+
 ### What did not change
 
-The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, the training-load model apart from the v0.2.2 light-session nudge, baseline maturity, and the invariants of §70. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
+The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, baseline maturity, and the invariants of §70. v0.2.3 adds event transitions inside that architecture; it does not replace it. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
 
 ---
 
