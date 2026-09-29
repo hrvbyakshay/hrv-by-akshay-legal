@@ -1,5 +1,7 @@
 # Personalized Freshness-Aware Stress & Readiness Algorithm
 
+> **Prefer a short version?** Start with [How your scores work](how-scores-work.html) — plain English for the home card. This page is the full technical write-up.
+
 > **Disclaimer — not a scientific or medical claim.**  
 > This document describes a **wellness estimate** for personal insight only. It is **not** a medical device, **not** a diagnosis, and **must not** be used to make medical decisions. Scores are approximate; they do not replace professional clinical judgment. Research citations below motivate design choices — they do **not** validate clinical use of this algorithm.
 
@@ -2788,6 +2790,24 @@ The sleep and light-session fixes were special cases of one gap: a meaningful ev
 19. **Double-counting.** A later direct measurement replaces the event-derived inference. The reading keeps the certainty; the inference does not add a second penalty.
 20. **No output smoother.** Integer rounding hides sub-point noise. The previous snapshot is used only for the displayed delta.
 21. **§68a — replay tests.** Hold the sensor snapshot fixed, inject one event, and check direction, bounds, decay, and replacement.
+
+### v0.2.4 — less stubborn Stress (default retune)
+
+Stress was prior-anchored enough that a clean resting HRV or a prompted check-in often moved only a few points. Defaults only — architecture and workout≠stress invariants unchanged:
+
+22. **Stress prior sd** widened (20 → 28) so the same evidence can pull farther from the mid-30s prior.
+23. **HRV/HR → stress slopes** raised (16 → 20 and 12 → 15 points per z).
+24. **Prompted check-in precision scale** raised (4 → 5.5) so “how stressed?” after a finger check owns more of today’s Stress without replacing HRV/sleep/prior entirely.
+25. **Unchanged:** post-exercise gate, EventResponse (workouts still do not write psychological stress), freshness half-lives, timeline `NOTABLE` threshold.
+
+### v0.2.5 — fuller Stress range (still workout ≠ stress)
+
+Real use still sat mostly in the low-20s to mid-40s. Defaults only:
+
+26. **Stress prior sd** widened again (28 → 36); **stress observation noise** tightened (16 → 13).
+27. **HRV/HR → stress slopes** raised (20 → 24 and 15 → 17 points per z).
+28. **Good-sleep calm evidence** slightly stronger (still weaker than disruption).
+29. **Physical-load → stress** coupling softened so hard sessions still raise fatigue / dip autonomic recovery without becoming Stress.
 
 ### What did not change
 
