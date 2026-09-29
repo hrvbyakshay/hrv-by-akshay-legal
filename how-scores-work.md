@@ -1,91 +1,92 @@
 # How your scores work
 
-> **Wellness estimate only.** Ready, Stress, Energy, and Recovery are personal insight scores — not a medical device, not a diagnosis, and not medical advice.
+> **Wellness estimate only.** Ready, Stress, Energy, and Recovery are for personal insight — not medical advice, not a diagnosis, not a medical device.
 
-**Want the deep technical write-up?**  
-→ [Full stress & readiness algorithm (long)](stress-readiness-algorithm.html) — latent states, freshness math, fusion rules, and invariants.
+**Want every technical detail?**  
+→ [Full algorithm (long)](stress-readiness-algorithm.html)
 
 ---
 
-## The four numbers on the home card
+## The four numbers on Home
 
-| Score | Plain meaning |
+| Score | Simple meaning |
 | --- | --- |
-| **Ready** | How prepared your body looks for today — recovery vs load, sleep pressure, and circadian alertness. |
-| **Stress** | Strain / tension estimate. Built separately from Ready so you can be recovered but still feel loaded. |
-| **Energy** | Immediate “fuel in the tank” — shaped by sleep debt, time of day (circadian rhythm), and recent strain. |
-| **Recovery** | How restored your autonomic / overnight picture looks relative to *your* usual. |
+| **Ready** | “Can my body handle today?” — sleep, recovery, and how alert you should feel right now. |
+| **Stress** | How loaded / tense things look. Separate from Ready — you can be recovered and still feel stressed. |
+| **Energy** | Right-now fuel. Sleep debt + time of day (body clock) + recent hard work. |
+| **Recovery** | How rested your body looks vs *your* usual, especially after sleep and calm HRV. |
 
-Small ↑ / ↓ next to a score is the change since the last engine update — not a clinical trend.
+↑ / ↓ = change since the last update. Not a medical trend.
 
 ---
 
-## What the engine actually blends
+## Where the numbers come from
 
-When the data exists, scores are built from several layers — not a single “HRV = ready” formula:
+The app does **not** take one HRV reading and call that “Ready.”  
+It looks at several everyday signals (when you have them) and combines them carefully.
 
-### Autonomic signals
-* **Heart-rate variability (HRV)** from finger or overnight sources — compared to *your* baseline, not a population chart
-* **Resting / overnight heart rate** — elevated vs usual can soften recovery; context matters (post-workout readings are gated)
-* **Measurement quality & context** — resting vs after exercise is treated differently on purpose
+### Heart & pulse
+* **HRV** (finger check or overnight) — how steady your beat-to-beat timing is vs *your* normal
+* **Heart rate at rest / overnight** — if it’s higher than usual, recovery can look softer
+* A reading **after a workout** is treated differently from a calm seated reading (so exercise doesn’t fake “high stress”)
 
 ### Sleep & body clock
-* **Last night’s sleep** (duration, and stages when Health Connect provides them)
-* **Sleep pressure** — how much “sleep debt” is still hanging over today
-* **Circadian rhythm / alertness** — time-of-day and wake timing so Energy and Ready can diverge (you can be recovered but still low-energy at the wrong clock hour)
+* **Last night’s sleep** (length, and stages if your watch sends them)
+* **Sleep debt** — short nights still weigh on today
+* **Circadian rhythm (body clock)** — morning vs late evening changes Energy / Ready even if sleep was fine. That’s why you can feel “recovered” but still low-energy at the wrong hour.
 
-### Load & movement
-* **Workouts** — raise physical fatigue / training load; they do **not** get dumped straight into psychological Stress
-* **Steps / daily activity** — lighter day context when available
+### Movement
+* **Workouts** — make the body more tired / less recovered for a while  
+  They are **not** automatically counted as mental stress
+* **Steps** — light day context when available
 
-### Your voice
-* **Short check-ins** (stress, energy, recovery feel) when you answer them — they nudge the matching state without wiping physiology
+### What you tell the app
+* Short answers like “how stressed?” or “energy?” gently move that score — they don’t erase heart/sleep data
 
-You do **not** need every signal. Missing pieces usually mean **lower confidence** or a smaller move — not an automatic bad score.
-
----
-
-## How the pieces talk to each other (simplified)
-
-Internally the app keeps a few **evolving states** (recovery, fatigue, sleep pressure, circadian alertness, stress, energy, and more). Each new observation updates only the states it is relevant to.
-
-Rough intuition:
-
-1. **Normalize** the reading against your personal usual (HRV, HR, sleep, load).
-2. **Ask how fresh it is** — this morning’s resting HR weighs more on “right now” than a reading from three days ago.
-3. **Apply context gates** — e.g. exercise-related autonomic activation is not blindly labeled as Stress.
-4. **Let overnight and workouts linger** — their effects can keep shaping scores after the event itself is “old.”
-5. **Derive the four cards** from those states: Ready mixes recovery + fatigue + sleep pressure + alertness; Stress stays its own track; Energy leans on circadian + sleep pressure + recent strain; Recovery tracks the autonomic overnight picture.
-
-That is why Ready and Energy can disagree, and why a hard session can drop Recovery without spiking Stress.
+**Missing data is OK.** Less data → less confidence or smaller moves. It does **not** mean “bad score.”
 
 ---
 
-## A few rules that matter
+## How combining works (in plain words)
 
-1. **Personal, not population.** Scores are judged against *your* recent baseline when enough history exists.
-2. **Freshness counts.** Newer, better-context readings move the needle more.
-3. **Workout ≠ stress.** Hard exercise can raise fatigue or dip recovery without being treated as psychological stress.
-4. **Circadian is real.** Clock hour and wake timing can change Energy / Ready even when overnight recovery looks fine.
-5. **Heart rate and HRV are relatives.** Absolute ms or bpm matter less than how they sit vs *your* usual, and when they were taken.
-6. **Confidence is honest.** Thin or stale data shows up as weaker confidence, not fake certainty.
+Think of a few dials the app keeps turning through the day:
+
+**recovery · tiredness · sleep debt · body-clock alertness · stress · energy**
+
+When something new arrives (sleep sync, finger check, workout, check-in):
+
+1. Compare it to **your** usual (not a stranger’s average)
+2. Prefer **fresh** data (this morning > three days ago)
+3. Respect **context** (workout ≠ “I’m stressed”)
+4. Let sleep and hard sessions **keep affecting** scores for a while after they end
+5. Then paint the four home numbers from those dials
+
+So Ready and Energy can disagree.  
+And a hard gym session can lower Recovery without raising Stress.
+
+---
+
+## Rules worth remembering
+
+1. Scores are **personal** — vs your baseline when history exists  
+2. **Newer** good readings matter more  
+3. **Workout ≠ stress**  
+4. **Body clock** can change Energy even after a good night  
+5. HR / HRV mean more as “vs usual” than as a raw number  
+6. Thin data → honest **low confidence**, not fake certainty  
 
 ---
 
 ## What this is not
 
-* Not clinically validated for diagnosis or treatment  
-* Not a substitute for a clinician  
-* Not a guarantee of how you will feel or perform  
+Not clinically validated · not a clinician · not a promise of how you’ll feel.
 
-Use the scores as a **personal wellness estimate**. If something feels off with your health, talk to a professional.
+If you’re worried about your health, talk to a professional.
 
 ---
 
-## Go deeper
+## More detail
 
-If you want equations, state names, freshness half-lives, circadian / sleep-regulation notes, and the full design rationale:
+**[Full algorithm document →](stress-readiness-algorithm.html)**
 
-**[Open the full algorithm document →](stress-readiness-algorithm.html)**
-
-Questions or ideas: [hrvbyakshay@gmail.com](mailto:hrvbyakshay@gmail.com)
+Questions: [hrvbyakshay@gmail.com](mailto:hrvbyakshay@gmail.com)
