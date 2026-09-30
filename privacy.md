@@ -120,6 +120,7 @@ We do **not** share your health data with data brokers.
 - Connecting **Health Connect** is optional. You control which permissions the App receives in Android / Health Connect settings.
 - Data in Health Connect may come from other apps **you** choose (for example Samsung Health); those apps have their own privacy policies.
 - Body Stress Meter may request Health Connect **read** access for: **Sleep**, **Steps**, **Exercise / workouts**, **Resting heart rate**, **Heart rate**, and related activity metrics (for example distance or calories when available) — to show overnight and movement context and to support on-device readiness estimates. We do not claim these as clinical scores or medical screening.
+- When the App uses continuous heart rate for readiness estimates, it reads a **bounded recent window** from Health Connect at evaluation time, collapses it to compact on-device summaries (for example mean / median / sd for that window), and **does not keep the full raw sample stream**. Those summaries stay on your device like other App data.
 - When Health Connect provides steps for a day, the App uses **that** total and does **not** combine it with the phone’s built-in step counter.
 - You can revoke Health Connect permissions at any time. After revoke, the App will stop reading new Health Connect data for those permissions.
 

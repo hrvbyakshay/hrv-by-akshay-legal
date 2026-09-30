@@ -5,9 +5,9 @@
 > **Disclaimer — not a scientific or medical claim.**  
 > This document describes a **wellness estimate** for personal insight only. It is **not** a medical device, **not** a diagnosis, and **must not** be used to make medical decisions. Scores are approximate; they do not replace professional clinical judgment. Research citations below motivate design choices — they do **not** validate clinical use of this algorithm.
 
-## Base Specification v0.1 (with v0.2/v0.2.3 addenda)
+## Base Specification v0.1 (with v0.2–v0.2.6 addenda)
 
-> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points; **(v0.2.3)** generalizes that into immediate, state-specific responses for meaningful events. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points; **(v0.2.3)** generalizes that into immediate, state-specific responses for meaningful events; **(v0.2.6)** adds continuous watch heart-rate windows as soft evidence for stress / recovery between deliberate readings. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -240,6 +240,7 @@ The algorithm should be able to accept many input types without requiring all us
 * LnRMSSD
 * resting HR
 * instantaneous resting HR
+* continuous daytime HR (bounded window summaries — see §31a)
 * HR trend
 * HR recovery
 * resting pulse
@@ -1244,6 +1245,50 @@ A hard workout is the clearest example.
 
 ---
 
+# 31a. Continuous watch heart rate between deliberate readings **(v0.2.6)**
+
+Consumer watches often stream heart rate through the day. That stream is valuable for catching a rise in strain while the user is relatively still, but storing every sample is neither necessary nor desirable, and treating ambulatory HR like a seated measurement would systematically inflate Stress.
+
+### What enters the engine
+
+On each **live** evaluation only (not historical rebuilds / “why” replays), the collector may pull Health Connect heart rate for a **bounded window** — typically since the last engine run, capped (about 60–90 minutes). The stream is collapsed **in memory** into short duration aggregates (about 10-minute buckets) plus a compact window summary:
+
+* mean, median, sd, min, max, p25, p75
+* exercise-overlap fraction
+* whether the window is **calm-eligible** for daytime baseline learning
+
+Raw samples are discarded. Only those compact window summaries are retained (about two weeks), so later runs have a personal **calm daytime** reference without keeping the full series.
+
+### Soft evidence, not a measurement the user took
+
+Bucket means are injected as `CURRENT_HR` observations labelled as watch-HR trend (or movement). They are **soft**:
+
+* quality stays below the personal-baseline floor, so they do not pollute seated HR norms;
+* adjacent buckets are strongly autocorrelated — the whole window is budgeted to about the weight of a few independent soft readings (√n scaling), not *n* stacked samples;
+* soft evidence may move Stress / autonomic means, but does **not** count as “observed,” does **not** set freshness coverage, and does **not** replace event-derived inferences the way a seated HRV does (post-workout dip and sleep→autonomic handoff stay intact);
+* a fresh seated / finger HRV still dominates; when one exists, only the stream *after* that reading is used.
+
+### Judged against calm daytime HR, not seated rest
+
+Seated resting HR and daytime ambulatory HR differ by several bpm. Continuous buckets are compared to the user’s **calm daytime windows** from prior runs (preferring the same clock hours, because HR has a circadian swing). Without enough calm history, the engine falls back to its seated/current-HR baseline at lower trust.
+
+### Samsung-style movement / exercise handling
+
+Following the same practical rule wearable stress products use — stress is not scored while the person is exercising or moving a lot:
+
+* overlapping a logged workout → during-exercise context (Stress weight ≈ 0);
+* ~30 minutes after a hard session → hard skip for Stress; the existing post-exercise gate continues out to ~180 minutes;
+* HR well above the calm daytime baseline (graded from about +1.5σ to +2.5σ), or clearly locomotion-level absolute HR → labelled as **movement**: may feed physiological activation, not psychological Stress;
+* only quieter elevation vs the person’s usual day can nudge Stress.
+
+### What this is for
+
+* Catch sustained sitting / standing strain between finger checks.
+* Keep workout and walk HR out of Stress.
+* Improve Stress / Recovery sensitivity without pretending the watch stream is a clinical measurement.
+
+---
+
 # 32. Stress should have a physical-strain gate
 
 If:
@@ -1271,6 +1316,10 @@ This is particularly important because recent wearable-stress research demonstra
 The gate exists because *physiology* is confounded by exercise. It must therefore apply **only to physiological observations** (HRV, resting HR, respiration, skin temperature). A **self-report** made during or just after a workout — "I feel very stressed" — is not confounded by exercise in the same way and must pass through at full strength; gating it would make the app deaf precisely when the user is telling it something.
 
 The relaxation curve is deliberately **convex** (approximately cubic in the elapsed fraction of the recovery window): HRV measured in the first half-hour after a session carries almost no psychological-stress information, and the weight is recovered mostly in the last third of the window. The practical target from §29 stands — the same HRV read *at rest* must land at least ~8 stress points above the *post-exercise* reading.
+
+### Continuous daytime HR **(v0.2.6)**
+
+Continuous watch heart rate is useful *between* deliberate readings, but it is not the same evidence class as a seated HRV. The same gate and the Samsung-style rule that stress is not measured while the person is moving a lot apply: workout overlap, the first ~30 minutes after a hard session, and HR well above the person's calm daytime baseline are treated as movement / physiological activation, not psychological stress. See §31a.
 
 ---
 
@@ -2809,9 +2858,18 @@ Real use still sat mostly in the low-20s to mid-40s. Defaults only:
 28. **Good-sleep calm evidence** slightly stronger (still weaker than disruption).
 29. **Physical-load → stress** coupling softened so hard sessions still raise fatigue / dip autonomic recovery without becoming Stress.
 
+### v0.2.6 — continuous watch HR between deliberate readings
+
+Watches stream heart rate all day. Using that stream naïvely would either store too much data or treat walking / workouts as Stress. v0.2.6 adds a bounded, soft path that matches the implementation:
+
+30. **§5 / §31a — continuous daytime HR.** On live evaluations, Health Connect HR since the last run (capped ~90 min) is collapsed to ~10-minute buckets plus mean / median / sd / percentiles. Raw samples are never persisted; only compact window summaries are kept for later calm-daytime baselines (circadian-matched when enough windows exist).
+31. **Soft evidence.** Watch-HR buckets move Stress / autonomic beliefs but do not set “observed,” freshness coverage, or replace event inferences. Correlated buckets share a √n weight budget; quality stays below the baseline floor. A fresh seated HRV still dominates and only cedes the minutes after it to the stream.
+32. **§32 — movement ≠ stress.** Workout overlap, ~30 min post-exercise, and HR well above calm daytime baseline are gated or labelled as movement (physiological activation allowed; psychological Stress not). Quieter elevation vs the person’s usual day can raise Stress.
+33. **Next-best input / Home.** When Health Connect (or the engine) already has last night’s sleep, the first carousel does not nudge “Log sleep”; naps stay on the sleep page.
+
 ### What did not change
 
-The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, baseline maturity, and the invariants of §70. v0.2.3 adds event transitions inside that architecture; it does not replace it. Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
+The latent-state architecture, the separation of readiness / stress / energy / confidence, the relevance matrix, freshness as an explicit layer, baseline maturity, and the invariants of §70. v0.2.3 adds event transitions inside that architecture; it does not replace it. v0.2.6 adds a soft continuous-HR input class without changing those invariants — most notably *"workout ≠ stress"* (§32) and *"missing data is not bad data."* Every v0.2 change makes an existing invariant hold in a case where the v0.1 implementation quietly violated it — most notably *"missing data is not bad data"* (§14, §15) and *"HRV is not equivalent to stress"* (§32).
 
 ---
 

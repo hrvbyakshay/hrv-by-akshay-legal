@@ -28,6 +28,7 @@ It looks at several everyday signals (when you have them) and combines them care
 ### Heart & pulse
 * **HRV** (finger check or overnight) — how steady your beat-to-beat timing is vs *your* normal
 * **Heart rate at rest / overnight** — if it’s higher than usual, recovery can look softer
+* **Continuous watch heart rate** (when Health Connect has it) — between engine updates the app looks at a short window of recent watch HR (not the whole day’s raw samples). Sustained elevation while you are relatively still can nudge Stress; elevation during or right after a workout is treated as movement / recovery, not mental stress
 * A reading **after a workout** is treated differently from a calm seated reading (so exercise doesn’t fake “high stress”)
 
 ### Sleep & body clock
@@ -53,11 +54,11 @@ Think of a few dials the app keeps turning through the day:
 
 **recovery · tiredness · sleep debt · body-clock alertness · stress · energy**
 
-When something new arrives (sleep sync, finger check, workout, check-in):
+When something new arrives (sleep sync, finger check, workout, watch HR window, check-in):
 
 1. Compare it to **your** usual (not a stranger’s average)
 2. Prefer **fresh** data (this morning > three days ago)
-3. Respect **context** (workout ≠ “I’m stressed”)
+3. Respect **context** (workout ≠ “I’m stressed”; walking-level HR ≠ stress)
 4. Let sleep and hard sessions **keep affecting** scores for a while after they end
 5. Then paint the four home numbers from those dials
 
@@ -70,10 +71,11 @@ And a hard gym session can lower Recovery without raising Stress.
 
 1. Scores are **personal** — vs your baseline when history exists  
 2. **Newer** good readings matter more  
-3. **Workout ≠ stress**  
+3. **Workout ≠ stress** (and continuous watch HR during exercise is not Stress either)  
 4. **Body clock** can change Energy even after a good night  
 5. HR / HRV mean more as “vs usual” than as a raw number  
 6. Thin data → honest **low confidence**, not fake certainty  
+7. A fresh **finger / seated HRV** still outweighs a soft watch-HR window for the same moment  
 
 ---
 
