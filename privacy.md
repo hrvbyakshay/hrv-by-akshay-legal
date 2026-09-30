@@ -1,16 +1,18 @@
 # Privacy Policy — Body Stress Meter
 
 **Effective date:** 23 September 2026  
-**Last updated:** 29 September 2026  
+**Last updated:** 1 October 2026  
 **App:** Body Stress Meter
 
 This Privacy Policy explains how **Body Stress Meter** (“we,” “us,” or “the App”) handles information when you use the App.
 
 **Your HRV · your data · download anytime.**
 
-**Important:** We do **not** collect your HRV, heart rate, inter-beat intervals, stress scores, tags, notes, or other health readings onto our servers. That information stays on **your devices** (and in optional exports or backups **you** choose). We do not operate a health-data cloud account that receives your measurements by default.
+**Important:** We do **not** collect your HRV, heart rate, inter-beat intervals, stress scores, tags, notes, continuous heart-rate streams, or other health readings onto **our** servers. That information stays on **your devices** by default. Optional Sync / backup (for example Google Drive) is **your choice** and writes to **your** account or storage — not to a developer-operated health-data cloud. We do not operate a central database that receives your measurements by default.
 
-Body Stress Meter is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, or data that may originate from Samsung Health), it does so only with permissions **you** grant.
+Body Stress Meter is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, Google Sign-In, or Google Drive), it does so only with permissions **you** grant.
+
+You can open this Privacy Policy and the Terms anytime from the App menu (☰).
 
 ---
 
@@ -24,9 +26,10 @@ This policy applies to people who install and use the Body Stress Meter Android 
 
 | Topic | Our approach |
 |--------|----------------|
-| Do we collect your HRV / heart rate | **No** — not uploaded to us |
+| Do we collect your HRV / heart rate on our servers | **No** |
 | Who owns your readings | **You** |
 | Where data is stored by default | On **your devices** only |
+| Google Drive Sync | **Optional** — into **your** Drive if you sign in and sync |
 | Do we sell your health data | **No** |
 | Do we run ads on your health data | **No** |
 | Can you export / download | **Yes** (CSV and backups you choose) |
@@ -42,11 +45,13 @@ We do **not** collect, receive, or store on developer-controlled servers:
 
 - Your HRV (for example RMSSD, SDNN, pNN50)  
 - Your heart rate or inter-beat intervals  
-- Stress / readiness scores derived from your readings  
+- Continuous watch heart-rate sample streams  
+- Stress / readiness / energy / recovery scores derived from your readings  
 - Tags, notes, or day logs you enter  
 - Health Connect samples the App reads on your phone  
+- Compact daytime HR window summaries used by the on-device engine (those stay on your device, and in optional backups **you** start)
 
-Those items are processed and kept **locally on your phone** (and briefly on a paired watch during measuring, when you use that feature). We cannot see your readings in a central cloud account for this App because no such collection pipeline is part of the App’s default design.
+Those items are processed and kept **locally on your phone** (and briefly on a paired watch during measuring, when you use that feature). We cannot see your readings in a central cloud account we operate, because no such collection pipeline is part of the App’s default design.
 
 ### 3.1 Health and measurement data (on your devices)
 
@@ -84,26 +89,34 @@ To show daily steps and movement context for wellness estimates:
 
 ### 3.4 What we do **not** require by default
 
-Body Stress Meter does **not** require you to create a cloud account to measure HRV.  
+Body Stress Meter does **not** require you to create a developer cloud account to measure HRV.  
 Core history is stored **locally** on your phone (and related local archives or exports **you** trigger).
 
 If you enable an optional cloud or file backup, or use Android’s system backup (`allowBackup`), that copy lives in **your** chosen storage or Google account — not as our advertising database. Sharing via the Android share sheet is always **user-initiated**.
 
 ### 3.5 Internet use
 
-The phone app may use network access for optional features (for example opening Health Connect or system settings, syncing Health Connect data you authorized, or optional backup / export flows). Core HRV calculation and on-device insights from your stored sessions are designed to work **on device**.
+The phone app may use network access for optional features (for example opening Health Connect or system settings, syncing Health Connect data you authorized, Google Sign-In, optional Google Drive Sync / backup, or optional export flows). Core HRV calculation and on-device insights from your stored sessions are designed to work **on device**.
+
+### 3.6 Optional Google account & Drive Sync
+
+- Signing in with Google and using **Sync** is **optional**. The App works without it.
+- If you Sync, a backup file may be written to **your Google Drive** (using limited Drive permission for files the App creates), under **your** Google account and Google’s terms/privacy policy.
+- We do **not** host that backup on our servers. We do not use Drive Sync to build a developer-side database of your health readings for advertising or resale.
+- You can disconnect Google / stop Syncing at any time. Files already in your Drive remain until **you** delete them in Drive.
+- Optional profile fields Google may provide after Sign-In (for example display name, email, birthday, or gender if you grant those scopes) are used only for on-device personalisation you choose — not to sell health data.
 
 ---
 
 ## 4. How we use information
 
-Because your HRV and heart-rate data stay on your devices, “use” mainly means **on-device** use so the App can:
+Because your HRV and heart-rate data stay on your devices (unless **you** Sync or export), “use” mainly means **on-device** use so the App can:
 
 1. Measure, compute, store, and display your HRV and related heart metrics **on your phone / watch**  
 2. Sync results between your phone and a paired watch when you use that feature (**device-to-device**, not to us)  
 3. Show trends, day logs, stress / readiness views, and on-device insights from **your** readings  
 4. Optionally refresh context from Health Connect after you grant permission (**on your device**), and optionally use the phone step sensor only when Health Connect has no steps for that day  
-5. Let you **export, download, and back up** your data to places **you** choose  
+5. Let you **export, download, and optionally Sync / back up** your data to places **you** choose  
 6. Improve reliability (on-device crash / error handling)
 
 We do **not** collect your HRV or heart rate to our servers.  
@@ -120,7 +133,7 @@ We do **not** share your health data with data brokers.
 - Connecting **Health Connect** is optional. You control which permissions the App receives in Android / Health Connect settings.
 - Data in Health Connect may come from other apps **you** choose (for example Samsung Health); those apps have their own privacy policies.
 - Body Stress Meter may request Health Connect **read** access for: **Sleep**, **Steps**, **Exercise / workouts**, **Resting heart rate**, **Heart rate**, and related activity metrics (for example distance or calories when available) — to show overnight and movement context and to support on-device readiness estimates. We do not claim these as clinical scores or medical screening.
-- When the App uses continuous heart rate for readiness estimates, it reads a **bounded recent window** from Health Connect at evaluation time, collapses it to compact on-device summaries (for example mean / median / sd for that window), and **does not keep the full raw sample stream**. Those summaries stay on your device like other App data.
+- When the App uses continuous heart rate for readiness estimates, it reads a **bounded recent window** from Health Connect at evaluation time, collapses it to compact on-device summaries (for example mean / median / sd for that window), and **does not keep the full raw sample stream**. Those summaries stay on your device like other App data (and may be included in optional Sync backups **you** start).
 - When Health Connect provides steps for a day, the App uses **that** total and does **not** combine it with the phone’s built-in step counter.
 - You can revoke Health Connect permissions at any time. After revoke, the App will stop reading new Health Connect data for those permissions.
 
@@ -131,6 +144,7 @@ We do **not** share your health data with data brokers.
 We share information only when:
 
 - **You** export or share a file (CSV, backup archive, etc.) using Android’s share sheet — the destination (Drive, email, Files, etc.) is chosen by you  
+- **You** use optional Google Drive Sync / restore — to **your** Drive account  
 - **You** restore or copy data using the App’s backup / restore flows  
 - Android **system backup** is enabled for the App (`allowBackup`): encrypted backups may go to **your** Google account or device transfer under Google’s / Android’s backup policies — this is OS-level backup for **your** restore convenience, not a developer analytics upload  
 - Required by law or valid legal process  
@@ -146,8 +160,10 @@ We do **not** automatically upload your health readings to our servers for adver
 
 - Primary storage: local databases and files on your devices  
 - Optional local archive / Downloads / Documents copies you or the App create for restore (for example under a folder such as Documents/AkshayHRV)  
+- Optional Google Drive Sync files live in **your** Drive under Google’s security model  
+- Compact continuous-HR window summaries on device are retained for a limited period (on the order of about two weeks) for on-device scoring, then age out; raw continuous samples are not retained as a stream  
 - Security depends on your device lock, OS updates, and any cloud account you use for optional backups  
-- Uninstalling the App may delete on-app local data; files you exported or archived outside the app may remain until you delete them
+- Uninstalling the App may delete on-app local data; files you exported, Synced to Drive, or archived outside the app may remain until you delete them
 
 ---
 
@@ -157,12 +173,14 @@ You can:
 
 - Measure or stop measuring at any time  
 - Turn Auto HRV off  
-- Deny or revoke camera, notification, Health Connect, Physical activity (steps), and related permissions  
+- Deny or revoke camera, notification, Health Connect, Physical activity (steps), Google Sign-In / Drive, and related permissions  
+- Skip Sync entirely and keep everything local  
 - Delete individual readings or clear app data via Android settings  
 - **Download / export** your data (CSV and backups the App provides)  
-- Stop using the App
+- Delete Drive backup files from your Google Drive  
+- Stop using the App  
 
-If applicable law gives you additional rights (access, deletion, portability), contact us using the details below and we will help within the App’s local / export model.
+If applicable law gives you additional rights (access, deletion, portability), contact us using the details below and we will help within the App’s local / export / user-Drive model.
 
 ---
 
@@ -174,13 +192,13 @@ Body Stress Meter is not directed at children under 13 (or the higher minimum ag
 
 ## 10. International users
 
-The App is for personal wellness use. Processing typically occurs on your device in your location. Optional cloud backups follow the policies of the provider you choose (for example Google).
+The App is for personal wellness use. Processing typically occurs on your device in your location. Optional cloud backups / Drive Sync follow the policies of the provider **you** choose (for example Google). We do not transfer your health readings to our own servers for cross-border hosting as part of the default product.
 
 ---
 
 ## 11. Changes
 
-We may update this Privacy Policy. We will change the “Last updated” date above. Continued use after an update means you accept the revised policy, except where local law requires additional consent.
+We may update this Privacy Policy. We will change the “Last updated” date above. Continued use after an update means you accept the revised policy, except where local law requires additional consent. Material updates may be shown again in the App.
 
 ---
 
@@ -194,4 +212,10 @@ For privacy questions about Body Stress Meter:
 
 ## 13. Not medical advice
 
-Nothing in the App or this policy is medical advice, diagnosis, or treatment. HRV, heart rate, stress-style scores, sleep stage summaries, and related views are **wellness / fitness** information only. The App does not provide AFib / arrhythmia medical screening or clinical sleep-quality scoring. Talk to a qualified clinician for health decisions.
+Nothing in the App or this policy is medical advice, diagnosis, or treatment. HRV, heart rate, stress-style scores, sleep stage summaries, continuous-HR trend summaries, and related views are **wellness / fitness** information only. The App does not provide AFib / arrhythmia medical screening or clinical sleep-quality scoring. Talk to a qualified clinician for health decisions.
+
+---
+
+## 14. Limitation of our role as data host
+
+Because we do not operate a default health-data server for your readings, we generally **cannot** retrieve, correct, or delete health measurements from a central account we do not hold. Your primary controls are on-device delete/clear, export, and (if you used Sync) managing files in **your** Google Drive or other storage you chose.
