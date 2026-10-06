@@ -182,3 +182,20 @@ footer {
   color: var(--muted);
   font-size: 0.9rem;
 }
+
+/* Deep-link highlight when arriving via ?brand= or #brand-… */
+.anchor-target,
+h2.anchor-target,
+h3.anchor-target,
+a.anchor-target + h3 {
+  scroll-margin-top: 72px;
+}
+
+a.anchor-target + h3,
+h3.anchor-target {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  padding: 8px 10px;
+}

@@ -6,6 +6,26 @@
 
 ---
 
+## Jump to your brand
+
+| Brand | Direct link |
+| --- | --- |
+| Samsung Galaxy Watch | [Open Samsung steps](#brand-samsung) |
+| Pixel Watch / Fitbit / Google Health | [Open Fitbit / Pixel steps](#brand-fitbit) |
+| Garmin | [Open Garmin steps](#brand-garmin) |
+| Polar | [Open Polar steps](#brand-polar) |
+| Oura | [Open Oura steps](#brand-oura) |
+| COROS | [Open COROS steps](#brand-coros) |
+| Withings | [Open Withings steps](#brand-withings) |
+| WHOOP | [Open WHOOP steps](#brand-whoop) |
+| Amazfit / Zepp | [Open Zepp steps](#brand-zepp) |
+| boAt / Noise | [Open boAt / Noise steps](#brand-boat) |
+| Huawei / Honor | [Open Huawei notes](#brand-huawei) |
+| Suunto | [Open Suunto notes](#brand-suunto) |
+
+You can also open a brand directly with a URL like  
+`health-connect-watch-sync.html?brand=garmin` or `#brand-garmin`.
+
 ## Table of contents
 
 1. [The data chain (read this first)](#1-the-data-chain-read-this-first)
@@ -14,18 +34,18 @@
 4. [Allow Body Stress Meter](#4-allow-body-stress-meter)
 5. [Verify data is actually in Health Connect](#5-verify-data-is-actually-in-health-connect)
 6. [Provider guides](#6-provider-guides)
-   - [Samsung Galaxy Watch / Samsung Health](#61-samsung-galaxy-watch--samsung-health)
-   - [Google Pixel Watch / Fitbit / Google Health](#62-google-pixel-watch--fitbit--google-health)
-   - [Garmin](#63-garmin)
-   - [Polar](#64-polar)
-   - [Oura](#65-oura)
-   - [COROS](#66-coros)
-   - [Withings](#67-withings)
-   - [WHOOP](#68-whoop)
-   - [Amazfit / Zepp](#69-amazfit--zepp)
-   - [boAt, Noise, and other Android wearables](#610-boat-noise-and-other-android-wearables)
-   - [Huawei / Honor (limited)](#611-huawei--honor-limited)
-   - [Suunto (limited)](#612-suunto-limited)
+   - [Samsung Galaxy Watch / Samsung Health](#brand-samsung)
+   - [Google Pixel Watch / Fitbit / Google Health](#brand-fitbit)
+   - [Garmin](#brand-garmin)
+   - [Polar](#brand-polar)
+   - [Oura](#brand-oura)
+   - [COROS](#brand-coros)
+   - [Withings](#brand-withings)
+   - [WHOOP](#brand-whoop)
+   - [Amazfit / Zepp](#brand-zepp)
+   - [boAt, Noise, and other Android wearables](#brand-boat)
+   - [Huawei / Honor (limited)](#brand-huawei)
+   - [Suunto (limited)](#brand-suunto)
 7. [What Body Stress Meter uses from Health Connect](#7-what-body-stress-meter-uses-from-health-connect)
 8. [In-app help](#8-in-app-help)
 9. [Troubleshooting](#9-troubleshooting)
@@ -142,6 +162,8 @@ Before blaming Body Stress Meter, confirm the hub has data:
 
 Jump to your brand. Each section has short steps for Body Stress Meter users **and** a link to the manufacturer’s own guide when one exists.
 
+<a id="brand-samsung"></a>
+
 ### 6.1 Samsung Galaxy Watch / Samsung Health
 
 **Companion apps:** Samsung Health · Galaxy Wearable  
@@ -171,6 +193,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-fitbit"></a>
+
 ### 6.2 Google Pixel Watch / Fitbit / Google Health
 
 **Companion apps:** Google Health (Fitbit) · formerly Google Fit  
@@ -199,6 +223,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-garmin"></a>
+
 ### 6.3 Garmin
 
 **Companion app:** Garmin Connect  
@@ -225,6 +251,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-polar"></a>
+
 ### 6.4 Polar
 
 **Companion app:** Polar Flow  
@@ -245,6 +273,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 **What Polar lists as syncing to HC (summary):** sleep (incl. phases when available), steps, exercise sessions, workout HR, resting HR, calories, SpO2, VO2 max settings, weight/height — see Polar’s page for the full list.
 
 ---
+
+<a id="brand-oura"></a>
 
 ### 6.5 Oura
 
@@ -270,6 +300,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-coros"></a>
+
 ### 6.6 COROS
 
 **Companion app:** COROS  
@@ -289,6 +321,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 | Syncing with 3rd Party Apps | [support.coros.com/hc/en-us/articles/360040256591-Syncing-with-3rd-Party-Apps](https://support.coros.com/hc/en-us/articles/360040256591-Syncing-with-3rd-Party-Apps) |
 
 ---
+
+<a id="brand-withings"></a>
 
 ### 6.7 Withings
 
@@ -317,6 +351,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-whoop"></a>
+
 ### 6.8 WHOOP
 
 **Companion app:** WHOOP  
@@ -342,6 +378,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 ---
 
+<a id="brand-zepp"></a>
+
 ### 6.9 Amazfit / Zepp
 
 **Companion apps:** Zepp · Zepp Life  
@@ -364,6 +402,8 @@ Menu labels change often between Zepp and Zepp Life builds — if you do not see
 
 ---
 
+<a id="brand-boat"></a>
+
 ### 6.10 boAt, Noise, and other Android wearables
 
 **Companion apps:** boAt Crest · NoiseFit · Noise · similar OEM apps  
@@ -380,6 +420,8 @@ Many value-tier brands expose HC under different names, or only after a Play Sto
 
 ---
 
+<a id="brand-huawei"></a>
+
 ### 6.11 Huawei / Honor (limited)
 
 **Companion app:** Huawei Health  
@@ -389,6 +431,8 @@ Huawei Health historically uses **Huawei Health Kit**, not Health Connect write,
 **Workarounds users sometimes use** (outside this app): OEM bridges / third-party sync tools — not endorsed or supported by Body Stress Meter; use at your own risk and privacy judgment.
 
 ---
+
+<a id="brand-suunto"></a>
 
 ### 6.12 Suunto (limited)
 
