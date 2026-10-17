@@ -28,8 +28,9 @@ It looks at several everyday signals (when you have them) and combines them care
 ### Heart & pulse
 * **HRV** (finger check or overnight) — how steady your beat-to-beat timing is vs *your* normal
 * **Heart rate at rest / overnight** — if it’s higher than usual, recovery can look softer
-* **Continuous watch heart rate** (when Health Connect has it) — between engine updates the app looks at a short window of recent watch HR (not the whole day’s raw samples). Sustained elevation while you are relatively still can nudge Stress; elevation during or right after a workout is treated as movement / recovery, not mental stress
+* **Continuous watch heart rate** (when Health Connect has it) — between engine updates the app looks at a short window of recent watch HR (not the whole day’s raw samples). Sustained elevation while you are **still** (low steps) can raise Stress into Elevated / High; elevation while walking or during / right after a workout is treated as movement / recovery, not mental stress
 * A reading **after a workout** is treated differently from a calm seated reading (so exercise doesn’t fake “high stress”)
+* A fresh finger / watch HRV or HR reading speaks louder than inferred “yesterday’s sleep / training load” context for Stress
 
 ### Sleep & body clock
 * **Last night’s sleep** (length, and stages if your watch sends them)
@@ -58,7 +59,7 @@ When something new arrives (sleep sync, finger check, workout, watch HR window, 
 
 1. Compare it to **your** usual (not a stranger’s average)
 2. Prefer **fresh** data (this morning > three days ago)
-3. Respect **context** (workout ≠ “I’m stressed”; walking-level HR ≠ stress)
+3. Respect **context** (workout ≠ “I’m stressed”; walking ≠ stress; still + high HR can be load)
 4. Let sleep and hard sessions **keep affecting** scores for a while after they end
 5. Then paint the four home numbers from those dials
 
@@ -71,7 +72,7 @@ And a hard gym session can lower Recovery without raising Stress.
 
 1. Scores are **personal** — vs your baseline when history exists  
 2. **Newer** good readings matter more  
-3. **Workout ≠ stress** (and continuous watch HR during exercise is not Stress either)  
+3. **Workout ≠ stress** (and continuous watch HR while walking / exercising is not Stress either — seated surges still count)  
 4. **Body clock** can change Energy even after a good night  
 5. HR / HRV mean more as “vs usual” than as a raw number  
 6. Thin data → honest **low confidence**, not fake certainty  

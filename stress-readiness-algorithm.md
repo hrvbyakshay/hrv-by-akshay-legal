@@ -7,7 +7,7 @@
 
 ## Base Specification v0.1 (with v0.2–v0.2.6 addenda)
 
-> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points; **(v0.2.3)** generalizes that into immediate, state-specific responses for meaningful events; **(v0.2.6)** adds continuous watch heart-rate windows as soft evidence for stress / recovery between deliberate readings. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
+> Sections marked **(v0.2)** — 14a, 15a, and the additions to 32, 54, 55 and 61 — were added after the first release once real usage exposed gaps in the sleep subsystem; **(v0.2.1)** adds the total-vs-addition distinction for manual sleep (14a), the morning reset after a full night (27, Rule G in 56) and a sharper definition of disagreement (26); **(v0.2.2)** lets a light session move the scores by about 1–2 points; **(v0.2.3)** generalizes that into immediate, state-specific responses for meaningful events; **(v0.2.6)** adds continuous watch heart-rate windows as soft evidence for stress / recovery between deliberate readings, with step cadence to separate seated surges from walking, plus a stronger direct-evidence path so a clearly loaded body is not held near the prior by inferred sleep / training context. They refine the base specification without changing its principles; the complete list is collected in the *"v0.2 addenda"* section near the end.
 
 ### 1. Purpose
 
@@ -1263,27 +1263,34 @@ Raw samples are discarded. Only those compact window summaries are retained (abo
 
 Bucket means are injected as `CURRENT_HR` observations labelled as watch-HR trend (or movement). They are **soft**:
 
-* quality stays below the personal-baseline floor, so they do not pollute seated HR norms;
+* quality stays modest so they do not dominate a deliberate seated reading; confirmed-still buckets may sit slightly above the personal-baseline floor because they are live-eval only and younger than the baseline exclusion window, so they never enter norms;
 * adjacent buckets are strongly autocorrelated — the whole window is budgeted to about the weight of a few independent soft readings (√n scaling), not *n* stacked samples;
 * soft evidence may move Stress / autonomic means, but does **not** count as “observed,” does **not** set freshness coverage, and does **not** replace event-derived inferences the way a seated HRV does (post-workout dip and sleep→autonomic handoff stay intact);
 * a fresh seated / finger HRV still dominates; when one exists, only the stream *after* that reading is used.
 
 ### Judged against calm daytime HR, not seated rest
 
-Seated resting HR and daytime ambulatory HR differ by several bpm. Continuous buckets are compared to the user’s **calm daytime windows** from prior runs (preferring the same clock hours, because HR has a circadian swing). Without enough calm history, the engine falls back to its seated/current-HR baseline at lower trust.
+Seated resting HR and daytime ambulatory HR differ by several bpm. Continuous buckets are compared to the user’s **calm daytime windows** from prior runs (preferring the same clock hours, because HR has a circadian swing). Without enough calm history, the engine falls back to its seated/current-HR baseline at lower trust. Mapping allows up to about +3σ vs that calm day so a strong seated surge can reach the High band.
 
-### Samsung-style movement / exercise handling
+### Samsung-style movement / exercise handling — cadence first
 
-Following the same practical rule wearable stress products use — stress is not scored while the person is exercising or moving a lot:
+Following the same practical rule wearable stress products use — stress is not scored while the person is exercising or moving a lot. When Health Connect **steps** are available for the same slices, **cadence decides**:
+
+* ≤ ~5 steps/min across a bucket → **confirmed still** (seated / standing). Elevated HR here is arousal, not walking: Resting context, fuller soft quality, and it may raise Stress;
+* ≥ ~40 steps/min → locomotion regardless of HR: labelled as **movement** (physiological activation allowed; psychological Stress not);
+* in between → blend cadence with the HR-only odds (never treat a clearly walking slice as still);
+
+When steps are unavailable, fall back to HR alone:
 
 * overlapping a logged workout → during-exercise context (Stress weight ≈ 0);
 * ~30 minutes after a hard session → hard skip for Stress; the existing post-exercise gate continues out to ~180 minutes;
-* HR well above the calm daytime baseline (graded from about +1.5σ to +2.5σ), or clearly locomotion-level absolute HR → labelled as **movement**: may feed physiological activation, not psychological Stress;
-* only quieter elevation vs the person’s usual day can nudge Stress.
+* HR well above the calm daytime baseline (graded from about +1.5σ to +2.5σ), or clearly locomotion-level absolute HR → labelled as **movement**.
+
+Using HR alone to call “walking” was the failure mode that undershot real seated stress (a high still HR looked like locomotion and was faded out of Stress). Steps fix that: still + high HR must be allowed to speak.
 
 ### What this is for
 
-* Catch sustained sitting / standing strain between finger checks.
+* Catch sustained sitting / standing strain between finger checks — including the high band a watch stress meter would show.
 * Keep workout and walk HR out of Stress.
 * Improve Stress / Recovery sensitivity without pretending the watch stream is a clinical measurement.
 
@@ -1319,7 +1326,7 @@ The relaxation curve is deliberately **convex** (approximately cubic in the elap
 
 ### Continuous daytime HR **(v0.2.6)**
 
-Continuous watch heart rate is useful *between* deliberate readings, but it is not the same evidence class as a seated HRV. The same gate and the Samsung-style rule that stress is not measured while the person is moving a lot apply: workout overlap, the first ~30 minutes after a hard session, and HR well above the person's calm daytime baseline are treated as movement / physiological activation, not psychological stress. See §31a.
+Continuous watch heart rate is useful *between* deliberate readings, but it is not the same evidence class as a seated HRV. The same gate and the Samsung-style rule that stress is not measured while the person is moving a lot apply: workout overlap, the first ~30 minutes after a hard session, and (when steps are missing) HR well above the person's calm daytime baseline. Prefer **step cadence** over HR alone to decide still vs walking — a seated surge must still raise Stress. See §31a.
 
 ---
 
@@ -1878,6 +1885,10 @@ If an event creates an inferred state change and a later direct measurement capt
 > Later resting HRV → that dip is replaced by the reading. The two are not stacked.
 
 The same handoff applies to last night's inferred autonomic lift: until a morning HRV or heart-rate reading arrives, the night stands in for it; once the reading arrives, the inference yields and the reading keeps the certainty.
+
+### Inferred stress yields to fresh direct evidence **(v0.2.6)**
+
+Sleep disruption and training load are also injected as *inferred* evidence for psychological stress — useful when nothing better is available, but they are proxies anchored near the prior. Once a **fresh direct** stress signal is present (seated / finger HRV, heart rate, or a self-report) with enough combined strength, those inferences step back (up to about three-quarters of their weight). A clearly loaded reading must not be held in the mid band by yesterday's night or today's workout context.
 
 ---
 
@@ -2862,10 +2873,12 @@ Real use still sat mostly in the low-20s to mid-40s. Defaults only:
 
 Watches stream heart rate all day. Using that stream naïvely would either store too much data or treat walking / workouts as Stress. v0.2.6 adds a bounded, soft path that matches the implementation:
 
-30. **§5 / §31a — continuous daytime HR.** On live evaluations, Health Connect HR since the last run (capped ~90 min) is collapsed to ~10-minute buckets plus mean / median / sd / percentiles. Raw samples are never persisted; only compact window summaries are kept for later calm-daytime baselines (circadian-matched when enough windows exist).
-31. **Soft evidence.** Watch-HR buckets move Stress / autonomic beliefs but do not set “observed,” freshness coverage, or replace event inferences. Correlated buckets share a √n weight budget; quality stays below the baseline floor. A fresh seated HRV still dominates and only cedes the minutes after it to the stream.
-32. **§32 — movement ≠ stress.** Workout overlap, ~30 min post-exercise, and HR well above calm daytime baseline are gated or labelled as movement (physiological activation allowed; psychological Stress not). Quieter elevation vs the person’s usual day can raise Stress.
-33. **Next-best input / Home.** When Health Connect (or the engine) already has last night’s sleep, the first carousel does not nudge “Log sleep”; naps stay on the sleep page.
+30. **§5 / §31a — continuous daytime HR.** On live evaluations, Health Connect HR since the last run (capped ~90 min) is collapsed to ~10-minute buckets plus mean / median / sd / percentiles, with **steps per bucket** when the steps permission is granted. Raw samples are never persisted; only compact window summaries are kept for later calm-daytime baselines (circadian-matched when enough windows exist).
+31. **Soft evidence.** Watch-HR buckets move Stress / autonomic beliefs but do not set “observed,” freshness coverage, or replace event inferences. Correlated buckets share a √n weight budget. A fresh seated HRV still dominates and only cedes the minutes after it to the stream.
+32. **§32 — movement ≠ stress; cadence first.** Workout overlap and ~30 min post-exercise stay gated. When steps are available, ≤ ~5 steps/min = still (elevated HR may raise Stress), ≥ ~40 steps/min = locomotion (not Stress). Without steps, fall back to HR vs calm daytime baseline. Confirmed-still surges get Resting context and fuller soft quality so seated High-band load is not faded out.
+33. **Inferred stress handoff (§49a).** Fresh direct stress evidence (HRV / HR / self-report) steps back sleep-disruption and training-load proxies so a loaded body is not held near the prior.
+34. **Stress sensitivity.** Wider stress prior, tighter observation noise, and steeper HRV/HR → stress slopes so a reading the per-session estimator calls High also lands the fused Stress score in High / Elevated rather than lingering Balanced.
+35. **Next-best input / Home.** When Health Connect (or the engine) already has last night’s sleep, the first carousel does not nudge “Log sleep”; naps stay on the sleep page.
 
 ### What did not change
 

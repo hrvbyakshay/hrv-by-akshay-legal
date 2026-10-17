@@ -1,7 +1,7 @@
 # Terms & Conditions — Body Stress Meter
 
 **Effective date:** 23 September 2026  
-**Last updated:** 1 October 2026  
+**Last updated:** 17 October 2026  
 **App:** Body Stress Meter
 
 These Terms & Conditions (“Terms”) govern your use of **Body Stress Meter** (the “App”). By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
@@ -16,7 +16,7 @@ You can open these Terms and the Privacy Policy anytime from the App menu (☰).
 
 ## 1. Who we are
 
-Body Stress Meter is provided by the independent developer behind this App (“we,” “us”). Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app and, if present on your device, any optional companion watch app that works with it.
+Body Stress Meter is provided by the independent developer behind this App (“we,” “us”). Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app. An optional companion watch app may exist for some builds or sideloads; **production Google Play builds may omit watch companion features**. Phone measuring (for example finger HRV) and Health Connect context remain available where you grant permission.
 
 ---
 
@@ -78,14 +78,15 @@ See the Privacy Policy for details on Health Connect, Physical activity / steps,
 
 **You acknowledge and agree that:**
 
-1. App outputs (including HRV metrics, heart rate, stress-style scores, readiness / energy / recovery estimates, sleep or movement context, continuous-HR trend summaries, tags, and plain-language insights) are **informational wellness / fitness estimates only**.  
+1. App outputs (including HRV metrics, heart rate, stress-style scores, readiness / energy / recovery estimates, Indexes / Metrics / Trends / Insights / Factors cards, training-load or sleep-context metrics, continuous-HR trend summaries, age-band style reference comparisons, tags, lifestyle tips, and plain-language insights) are **informational wellness / fitness estimates only**.  
 2. They are **not** clinical measurements, medical screening (including AFib / arrhythmia screening), or sleep-medicine scoring.  
-3. Results can be wrong, incomplete, delayed, or affected by motion, lighting, skin tone, device quality, sensor limits, Health Connect gaps, user error, or algorithm limits.  
-4. You will **not** use the App as the sole basis for medical, medication, training-load, or emergency decisions.  
-5. If you feel unwell, have chest pain, dizziness, fainting, irregular heartbeat, or other concerning symptoms, seek **emergency or clinical care** — do not rely on the App.  
-6. You assume the risk of relying on App outputs for personal wellness decisions, to the maximum extent permitted by law.
+3. Insights, Factors, tips, and similar plain-language views summarize **your** on-device data for personal awareness. They do **not** prescribe medication, diagnose conditions, or replace a clinician.  
+4. Results can be wrong, incomplete, delayed, or affected by motion, lighting, skin tone, device quality, sensor limits, Health Connect gaps, user error, or algorithm limits.  
+5. You will **not** use the App as the sole basis for medical, medication, training-load, or emergency decisions.  
+6. If you feel unwell, have chest pain, dizziness, fainting, irregular heartbeat, or other concerning symptoms, seek **emergency or clinical care** — do not rely on the App.  
+7. You assume the risk of relying on App outputs for personal wellness decisions, to the maximum extent permitted by law.
 
-Nothing in the App creates a doctor–patient or clinician–patient relationship.
+Nothing in the App creates a doctor–patient or clinician–patient relationship. Store listing text, screenshots, and in-App marketing must be read together with this section: wellness / fitness only.
 
 ---
 
@@ -102,7 +103,16 @@ Camera fingertip measuring, watch optical sensors, and Health Connect feeds have
 
 ## 9. Pro features and payments
 
-Some features may require a paid upgrade (“Pro”) or other in-app purchase processed by Google Play (or another store). Purchases are subject to that store’s payment, refund, and subscription rules. We do not control store billing disputes beyond what the platform allows developers to do. Unused features after a purchase cancellation follow the store’s policy and any in-App description at purchase time.
+Some features may require a paid upgrade (“Pro”) processed as a **one-time in-app product** by **Google Play Billing**, not a developer-operated recurring subscription server unless we clearly say otherwise in the App. We do **not** process card payments ourselves (users do **not** check out through a separate BillDesk or developer merchant page inside the App).
+
+- Free use includes core measuring and a limited set of metrics / Insights; the App may cap daily finger or face check-ins and lock some charts or export tools until Pro is unlocked.  
+- **Purchase availability depends on Google Play.** If the developer’s Play payments / merchant profile is not yet approved (including country-specific merchant verification Google may require), or Play Billing is temporarily unavailable in your country or account, you may still use free features, but Pro checkout or Restore may fail or show no price until Play enables billing. That is a store-side condition, not a defect in your health data.   
+- Optional features such as outdoor **route recording** require location permission you grant; you are responsible for using GPS recording safely and lawfully.
+- Purchases, refunds, chargebacks, and Restore purchases follow **Google Play’s** payment rules. We do not control store billing disputes beyond what the platform allows developers to do.  
+- After purchase or Restore, Pro is tied to **your Google Play account** on this App; we store a local entitlement flag so unlocks survive restarts.  
+- Prices shown in the App are informational; the amount charged is whatever Google Play displays and charges at checkout.  
+- Unused features after a refund or purchase cancellation follow the store’s policy and any in-App description at purchase time.  
+- Circumventing Pro locks, quotas, or billing is not allowed.
 
 ---
 

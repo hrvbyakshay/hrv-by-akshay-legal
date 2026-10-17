@@ -1,7 +1,7 @@
 # Privacy Policy — Body Stress Meter
 
 **Effective date:** 23 September 2026  
-**Last updated:** 1 October 2026  
+**Last updated:** 17 October 2026  
 **App:** Body Stress Meter
 
 This Privacy Policy explains how **Body Stress Meter** (“we,” “us,” or “the App”) handles information when you use the App.
@@ -32,7 +32,8 @@ This policy applies to people who install and use the Body Stress Meter Android 
 | Google Drive Sync | **Optional** — into **your** Drive if you sign in and sync |
 | Do we sell your health data | **No** |
 | Do we run ads on your health data | **No** |
-| Can you export / download | **Yes** (CSV and backups you choose) |
+| Optional Pro unlock | **Google Play** one-time purchase (optional) |
+| Can you export / download | **Yes** (CSV and backups you choose; some export tools may require Pro) |
 | Medical device | **No** — wellness / fitness only |
 
 ---
@@ -58,10 +59,13 @@ Those items are processed and kept **locally on your phone** (and briefly on a p
 Depending how you use the App, it may process:
 
 - **HRV sessions** from phone camera fingertip measurement and/or a paired compatible watch (for example inter-beat intervals / IBI, RMSSD, SDNN, pNN50, mean heart rate, signal quality, session time, auto vs manual)
-- **Derived estimates** shown in the App (for example readiness, stress-style scores, and plain-language insights based on your own HRV and heart rate — personal estimates, not clinical diagnoses)
+- **Derived estimates** shown in the App (for example readiness, stress-style scores, recovery / energy style views, Indexes / Metrics / Trends / Insights / Factors cards, training-load and sleep-context metrics, and plain-language insights based on **your** own readings — personal wellness estimates, not clinical diagnoses)
+- **Optional on-device comparisons** (for example versus your recent baseline, or general age-band reference ranges when you provide age) — computed **on your device**, not sent to us for profiling
 - **Optional Health Connect reads** you authorize: sleep, steps, workouts / exercise, resting heart rate, and heart rate — **only if you grant permission**. The App **reads** this context for sleep, movement, and Heart views and for on-device readiness estimates; it does not write health records to Health Connect unless a future version clearly asks and you agree
 - **Tags and notes** you attach to readings
-- **App settings** (for example Auto HRV interval, sample length, motion sensitivity, display preferences)
+- **Manual sleep or workout entries** you choose to log in the App (stored on device like other timeline data)
+- **Optional outdoor route / walk–run recordings** you start (GPS path points, distance, duration, and related workout summary) — only if you grant location permission and start recording
+- **App settings** (for example Auto HRV interval, sample length, motion sensitivity, display preferences, Pro entitlement cache after a Play purchase)
 
 ### 3.2 Camera and sensors (phone)
 
@@ -70,6 +74,12 @@ If you use fingertip / camera measurement:
 - The App uses the **rear camera and flash** briefly to estimate pulse from fingertip light changes
 - Frames are processed **on device** to compute the signal; the App is not designed to upload your camera video to our servers
 - You can deny camera permission; camera-based measuring will not work until you allow it
+
+If you use an optional **face calm** check:
+
+- The App may use the **front camera** briefly for an on-device calm / face signal cue
+- Frames are processed **on device**; the App is not designed to upload your face video to our servers
+- You can deny camera permission; face-based checks will not work until you allow it
 
 ### 3.2a Physical activity / steps (phone)
 
@@ -80,6 +90,15 @@ To show daily steps and movement context for wellness estimates:
 - Phone steps and Health Connect steps are **never added together** for the same day (no double-counting). If Health Connect steps arrive later for that day, they **replace** the phone-sensor total for that day.
 - Step totals stay **on your device**. We do not upload them to our servers for advertising.
 - You can deny or revoke Physical activity permission; the App will then stop reading the built-in step sensor (Health Connect steps still work if you leave that permission on).
+
+### 3.2b Location (optional route recording)
+
+If you start an outdoor walk / run route recording:
+
+- The App may request **precise location** while recording so it can draw your path and compute distance on your device
+- Location points for that session stay **on your device** (and may appear in optional Sync / export files **you** start). We do not stream your live location to our servers
+- Recording uses a foreground service notification while active so you can see and stop it
+- You can deny or revoke location permission; route recording will not work until you allow it. Other App features do not require location
 
 ### 3.3 Device and connection data
 
@@ -106,6 +125,15 @@ The phone app may use network access for optional features (for example opening 
 - You can disconnect Google / stop Syncing at any time. Files already in your Drive remain until **you** delete them in Drive.
 - Optional profile fields Google may provide after Sign-In (for example display name, email, birthday, or gender if you grant those scopes) are used only for on-device personalisation you choose — not to sell health data.
 
+### 3.7 Optional Pro unlock (Google Play Billing)
+
+- Some charts, Insights / Metrics depth, export tools, or daily finger / face check-in limits may be behind an optional **Pro** unlock.
+- Pro is a **one-time in-app product** processed by **Google Play Billing** (not a developer-run subscription server). Google handles payment card details under Google’s terms and privacy policy.
+- After purchase (or Restore), the App stores an **entitlement flag on your device** and may refresh purchase status with Play so Pro stays linked to **your Google Play account**.
+- We do **not** receive your full payment card number. Purchase confirmation is used only to unlock features you paid for — not to sell health data or run ads on your readings.
+- Free use of core measuring and a limited set of metrics remains available without Pro; quotas and locked charts are described in the App’s paywall screens.
+- Users pay through **Google Play** only. Developer-side merchant / payout verification required by Google in some countries (for example India PA-CB processes that may involve partners such as BillDesk) is **not** a separate checkout inside the App and does not give us your card details.
+
 ---
 
 ## 4. How we use information
@@ -117,7 +145,8 @@ Because your HRV and heart-rate data stay on your devices (unless **you** Sync o
 3. Show trends, day logs, stress / readiness views, and on-device insights from **your** readings  
 4. Optionally refresh context from Health Connect after you grant permission (**on your device**), and optionally use the phone step sensor only when Health Connect has no steps for that day  
 5. Let you **export, download, and optionally Sync / back up** your data to places **you** choose  
-6. Improve reliability (on-device crash / error handling)
+6. Optionally unlock Pro features after a Google Play purchase / restore  
+7. Improve reliability (on-device crash / error handling)
 
 We do **not** collect your HRV or heart rate to our servers.  
 We do **not** sell your health data.  
@@ -173,10 +202,12 @@ You can:
 
 - Measure or stop measuring at any time  
 - Turn Auto HRV off  
-- Deny or revoke camera, notification, Health Connect, Physical activity (steps), Google Sign-In / Drive, and related permissions  
+- Deny or revoke camera, location (route recording), notification, Health Connect, Physical activity (steps), Google Sign-In / Drive, and related permissions  
 - Skip Sync entirely and keep everything local  
+- Skip Pro entirely and use free-tier measuring / metrics  
 - Delete individual readings or clear app data via Android settings  
-- **Download / export** your data (CSV and backups the App provides)  
+- **Download / export** your data (CSV and backups the App provides; some export paths may require Pro)  
+- Restore or manage Pro purchases through Google Play  
 - Delete Drive backup files from your Google Drive  
 - Stop using the App  
 
@@ -212,7 +243,7 @@ For privacy questions about Body Stress Meter:
 
 ## 13. Not medical advice
 
-Nothing in the App or this policy is medical advice, diagnosis, or treatment. HRV, heart rate, stress-style scores, sleep stage summaries, continuous-HR trend summaries, and related views are **wellness / fitness** information only. The App does not provide AFib / arrhythmia medical screening or clinical sleep-quality scoring. Talk to a qualified clinician for health decisions.
+Nothing in the App or this policy is medical advice, diagnosis, or treatment. HRV, heart rate, stress-style scores, sleep stage summaries, continuous-HR trend summaries, Indexes / Metrics / Trends estimates, training-load context, and related views are **wellness / fitness** information only. The App does not provide AFib / arrhythmia medical screening or clinical sleep-quality scoring. Talk to a qualified clinician for health decisions.
 
 ---
 
