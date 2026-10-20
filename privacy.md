@@ -1,16 +1,31 @@
-# Privacy Policy — Body Stress Meter
+# Privacy Policy — BaseRatio
 
 **Effective date:** 23 September 2026  
-**Last updated:** 17 October 2026  
-**App:** Body Stress Meter
+**Last updated:** 20 October 2026  
+**Google Play app name:** BaseRatio  
+**Previous Google Play name:** Body Stress Meter  
+**Android package name:** `com.akshayhrv`  
+**Developer / publisher / legal entity:** Akshay Dhillon, an individual developer in India  
+**Contact:** hrv_by_akshay@outlook.com
 
-This Privacy Policy explains how **Body Stress Meter** (“we,” “us,” or “the App”) handles information when you use the App.
+This Privacy Policy explains how **BaseRatio** (“we,” “us,” or “the App”) handles information when you use the App. BaseRatio is provided by **Akshay Dhillon**. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). This policy applies to that same app under the new name.
+
+### Listing identity (matches Google Play)
+
+| Item | Detail |
+|------|--------|
+| Google Play app name | **BaseRatio** |
+| Previous Google Play name | Body Stress Meter |
+| Android package / application ID | `com.akshayhrv` |
+| Developer / publisher name | **Akshay Dhillon** |
+| Legal entity | Akshay Dhillon, an individual developer based in India (not a registered company) |
+| Contact email | **hrv_by_akshay@outlook.com** |
 
 **Your HRV · your data · download anytime.**
 
 **Important:** We do **not** collect your HRV, heart rate, inter-beat intervals, stress scores, tags, notes, continuous heart-rate streams, or other health readings onto **our** servers. That information stays on **your devices** by default. Optional Sync / backup (for example Google Drive) is **your choice** and writes to **your** account or storage — not to a developer-operated health-data cloud. We do not operate a central database that receives your measurements by default.
 
-Body Stress Meter is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, Google Sign-In, or Google Drive), it does so only with permissions **you** grant.
+BaseRatio is an independent personal wellness app. It is not a medical product and is **not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer**. Where the App uses platform services (for example Android, Wear OS, Health Connect, Google Sign-In, or Google Drive), it does so only with permissions **you** grant.
 
 You can open this Privacy Policy and the Terms anytime from the App menu (☰).
 
@@ -18,7 +33,7 @@ You can open this Privacy Policy and the Terms anytime from the App menu (☰).
 
 ## 1. Who this applies to
 
-This policy applies to people who install and use the Body Stress Meter Android phone app, and — if available on your device — any optional companion watch app that syncs measurements with the phone.
+This policy applies to people who install and use the BaseRatio Android phone app (including people who installed it when it was listed as Body Stress Meter), and — if available on your device — any optional companion watch app that syncs measurements with the phone.
 
 ---
 
@@ -63,23 +78,31 @@ Depending how you use the App, it may process:
 - **Optional on-device comparisons** (for example versus your recent baseline, or general age-band reference ranges when you provide age) — computed **on your device**, not sent to us for profiling
 - **Optional Health Connect reads** you authorize: sleep, steps, workouts / exercise, resting heart rate, and heart rate — **only if you grant permission**. The App **reads** this context for sleep, movement, and Heart views and for on-device readiness estimates; it does not write health records to Health Connect unless a future version clearly asks and you agree
 - **Tags and notes** you attach to readings
+- **Meditation and breathwork sessions** you complete (chosen pattern, elapsed duration, completed cycle count, and timestamp — stored strictly on your local device)
 - **Manual sleep or workout entries** you choose to log in the App (stored on device like other timeline data)
 - **Optional outdoor route / walk–run recordings** you start (GPS path points, distance, duration, and related workout summary) — only if you grant location permission and start recording
 - **App settings** (for example Auto HRV interval, sample length, motion sensitivity, display preferences, Pro entitlement cache after a Play purchase)
 
-### 3.2 Camera and sensors (phone)
+### 3.2 Camera, face check, and breathwork sensors (phone)
 
 If you use fingertip / camera measurement:
 
-- The App uses the **rear camera and flash** briefly to estimate pulse from fingertip light changes
-- Frames are processed **on device** to compute the signal; the App is not designed to upload your camera video to our servers
-- You can deny camera permission; camera-based measuring will not work until you allow it
+- The App uses the **rear camera and flash** briefly to estimate pulse from fingertip light changes.
+- Frames are processed in volatile memory **on device** to compute the signal; the App never records, stores, or uploads your camera video to any server.
+- You can deny camera permission; camera-based measuring will not work until you allow it.
 
-If you use an optional **face calm** check:
+If you use the optional **face calm** check:
 
-- The App may use the **front camera** briefly for an on-device calm / face signal cue
-- Frames are processed **on device**; the App is not designed to upload your face video to our servers
-- You can deny camera permission; face-based checks will not work until you allow it
+- The App uses the **front camera** briefly (20–30 seconds) for an on-device facial calm and micro-movement check.
+- Frames are analyzed ephemerally in real-time memory **on device** using local vision models (MediaPipe Face Landmarker).
+- **No facial photos, video recordings, or biometric face templates are saved, stored, or transmitted.** Frames are discarded immediately after evaluation.
+- You can deny camera permission; face-based checks will not work until you allow it.
+
+If you use **Meditation & Breathwork**:
+
+- Guided breathwork pacing exercises (4-6 Long Exhale, 4-7-8 Wind-Down, Box Breathing 4-4-4-4, Resonant Coherence) run **100% on device**.
+- Visual pacing animations and optional tactile haptic vibration cues execute entirely locally using your phone's vibration motor.
+- No microphone, audio recording, or physiological telemetry is captured or uploaded during breathwork sessions.
 
 ### 3.2a Physical activity / steps (phone)
 
@@ -108,7 +131,7 @@ If you start an outdoor walk / run route recording:
 
 ### 3.4 What we do **not** require by default
 
-Body Stress Meter does **not** require you to create a developer cloud account to measure HRV.  
+BaseRatio does **not** require you to create a developer cloud account to measure HRV.  
 Core history is stored **locally** on your phone (and related local archives or exports **you** trigger).
 
 If you enable an optional cloud or file backup, or use Android’s system backup (`allowBackup`), that copy lives in **your** chosen storage or Google account — not as our advertising database. Sharing via the Android share sheet is always **user-initiated**.
@@ -161,7 +184,7 @@ We do **not** share your health data with data brokers.
 
 - Connecting **Health Connect** is optional. You control which permissions the App receives in Android / Health Connect settings.
 - Data in Health Connect may come from other apps **you** choose (for example Samsung Health); those apps have their own privacy policies.
-- Body Stress Meter may request Health Connect **read** access for: **Sleep**, **Steps**, **Exercise / workouts**, **Resting heart rate**, **Heart rate**, and related activity metrics (for example distance or calories when available) — to show overnight and movement context and to support on-device readiness estimates. We do not claim these as clinical scores or medical screening.
+- BaseRatio may request Health Connect **read** access for: **Sleep**, **Steps**, **Exercise / workouts**, **Resting heart rate**, **Heart rate**, and related activity metrics (for example distance or calories when available) — to show overnight and movement context and to support on-device readiness estimates. We do not claim these as clinical scores or medical screening.
 - When the App uses continuous heart rate for readiness estimates, it reads a **bounded recent window** from Health Connect at evaluation time, collapses it to compact on-device summaries (for example mean / median / sd for that window), and **does not keep the full raw sample stream**. Those summaries stay on your device like other App data (and may be included in optional Sync backups **you** start).
 - When Health Connect provides steps for a day, the App uses **that** total and does **not** combine it with the phone’s built-in step counter.
 - You can revoke Health Connect permissions at any time. After revoke, the App will stop reading new Health Connect data for those permissions.
@@ -217,7 +240,7 @@ If applicable law gives you additional rights (access, deletion, portability), c
 
 ## 9. Children
 
-Body Stress Meter is not directed at children under 13 (or the higher minimum age required in your country). Do not use the App if you are under that age.
+BaseRatio is not directed at children under 13 (or the higher minimum age required in your country). Do not use the App if you are under that age.
 
 ---
 
@@ -235,8 +258,9 @@ We may update this Privacy Policy. We will change the “Last updated” date ab
 
 ## 12. Contact
 
-For privacy questions about Body Stress Meter:
+For privacy questions about BaseRatio:
 
+- **Developer / legal entity:** Akshay Dhillon  
 - **Contact email:** hrv_by_akshay@outlook.com
 
 ---

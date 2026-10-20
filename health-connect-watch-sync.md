@@ -1,6 +1,6 @@
-# Watch → Health Connect → Body Stress Meter
+# Watch → Health Connect → BaseRatio
 
-> **Why this guide exists:** Body Stress Meter (and apps like Welltory) read sleep, steps, heart rate, and workouts from **Health Connect** — not from your watch over Bluetooth. If the watch companion app is not writing into Health Connect, Home looks empty even when permissions for this app look fine.
+> **Why this guide exists:** BaseRatio (and apps like Welltory) read sleep, steps, heart rate, and workouts from **Health Connect** — not from your watch over Bluetooth. If the watch companion app is not writing into Health Connect, Home looks empty even when permissions for this app look fine.
 
 **Wellness information only — not a medical device.**
 
@@ -31,7 +31,7 @@ You can also open a brand directly with a URL like
 1. [The data chain (read this first)](#1-the-data-chain-read-this-first)
 2. [Quick start (any watch)](#2-quick-start-any-watch)
 3. [Install Health Connect](#3-install-health-connect)
-4. [Allow Body Stress Meter](#4-allow-body-stress-meter)
+4. [Allow BaseRatio](#4-allow-baseratio)
 5. [Verify data is actually in Health Connect](#5-verify-data-is-actually-in-health-connect)
 6. [Provider guides](#6-provider-guides)
    - [Samsung Galaxy Watch / Samsung Health](#brand-samsung)
@@ -46,7 +46,7 @@ You can also open a brand directly with a URL like
    - [boAt, Noise, and other Android wearables](#brand-boat)
    - [Huawei / Honor (limited)](#brand-huawei)
    - [Suunto (limited)](#brand-suunto)
-7. [What Body Stress Meter uses from Health Connect](#7-what-body-stress-meter-uses-from-health-connect)
+7. [What BaseRatio uses from Health Connect](#7-what-baseratio-uses-from-health-connect)
 8. [In-app help](#8-in-app-help)
 9. [Troubleshooting](#9-troubleshooting)
 10. [Official link index](#10-official-link-index)
@@ -65,16 +65,16 @@ Companion app on phone
         │  (must enable “Health Connect” / share / export)
         ▼
 Health Connect (on-device hub)
-        │  (Allow All for Body Stress Meter)
+        │  (Allow All for BaseRatio)
         ▼
-Body Stress Meter
+BaseRatio
 ```
 
 | Step | Who does it | Can this app flip the switch? |
 | --- | --- | --- |
 | Watch ↔ companion app | You + manufacturer app | No |
 | Companion → Health Connect | You, in the companion app | No |
-| Health Connect → Body Stress Meter | You, via permission sheet | **Yes** (we show the system dialog) |
+| Health Connect → BaseRatio | You, via permission sheet | **Yes** (we show the system dialog) |
 | Confirm data exists | You (or our empty-state prompt) | We can detect missing sleep/steps |
 
 If any link is broken, sleep, overnight HR, workouts, or watch steps will not show up.
@@ -87,9 +87,9 @@ If any link is broken, sleep, overnight HR, workouts, or watch steps will not sh
 2. Make sure the watch has synced recently (open the companion and pull to refresh).
 3. Install / open **Health Connect** ([§3](#3-install-health-connect)).
 4. In the **companion app**, turn on sharing / export to Health Connect ([§6](#6-provider-guides)).
-5. In Body Stress Meter, tap **Allow** / **Allow all** for Health Connect ([§4](#4-allow-body-stress-meter)).
+5. In BaseRatio, tap **Allow** / **Allow all** for Health Connect ([§4](#4-allow-baseratio)).
 6. Confirm Sleep / Steps / Heart rate appear under Health Connect → Browse data ([§5](#5-verify-data-is-actually-in-health-connect)).
-7. In Body Stress Meter, use **Sync now** (or open Home and pull to refresh).
+7. In BaseRatio, use **Sync now** (or open Home and pull to refresh).
 
 Phone step counting can still work without a watch. **Sleep and most workouts need the companion writing into Health Connect.**
 
@@ -119,11 +119,11 @@ Health Connect is built into the system:
 
 ---
 
-## 4. Allow Body Stress Meter
+## 4. Allow BaseRatio
 
 Do this **after** (or while) linking the watch companion — both sides need permission.
 
-1. Open **Body Stress Meter**.
+1. Open **BaseRatio**.
 2. On first run, complete the Health Connect onboarding screen, or later use:
    - Home / menu → **Health Connect**, or  
    - Menu → **Watch & Health Connect**
@@ -138,15 +138,15 @@ Do this **after** (or while) linking the watch companion — both sides need per
    | Resting heart rate | Recovery baselines |
    | Access past data (history) | Older nights and workouts when available |
 
-4. Optionally open **Health Connect → App permissions → Body Stress Meter** and double-check the same toggles.
+4. Optionally open **Health Connect → App permissions → BaseRatio** and double-check the same toggles.
 
-Body Stress Meter only **reads** Health Connect for wellness scores. It does not replace your watch vendor’s cloud sync.
+BaseRatio only **reads** Health Connect for wellness scores. It does not replace your watch vendor’s cloud sync.
 
 ---
 
 ## 5. Verify data is actually in Health Connect
 
-Before blaming Body Stress Meter, confirm the hub has data:
+Before blaming BaseRatio, confirm the hub has data:
 
 1. Open **Health Connect**.
 2. Tap **Data and access** / **Browse data** (wording varies).
@@ -154,13 +154,13 @@ Before blaming Body Stress Meter, confirm the hub has data:
 4. Open an entry and note the **source app** (e.g. Samsung Health, Garmin Connect).
 
 - If the metric is **missing here**, fix the companion → Health Connect link ([§6](#6-provider-guides)).
-- If the metric is **present here** but missing in Body Stress Meter, re-grant permissions and tap **Sync now**.
+- If the metric is **present here** but missing in BaseRatio, re-grant permissions and tap **Sync now**.
 
 ---
 
 ## 6. Provider guides
 
-Jump to your brand. Each section has short steps for Body Stress Meter users **and** a link to the manufacturer’s own guide when one exists.
+Jump to your brand. Each section has short steps for BaseRatio users **and** a link to the manufacturer’s own guide when one exists.
 
 <a id="brand-samsung"></a>
 
@@ -176,7 +176,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 4. **Allow** Sleep, Steps, Exercise, Heart rate, Resting heart rate (or Allow all).
 5. Also keep **Sync with Samsung account / Samsung Cloud** on, and tap **Sync now** if shown.
 6. After changing permissions in phone Settings → Health Connect, **re-open Samsung Health** once (Samsung’s own note).
-7. In Body Stress Meter → Allow Health Connect → Sync.
+7. In BaseRatio → Allow Health Connect → Sync.
 
 **Official / primary docs**
 
@@ -189,7 +189,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 - Needs a recent Samsung Health (HC sync since ~6.22.5+).
 - Some Samsung-only scores (e.g. certain stress/ECG surfaces) stay inside Samsung Health and never appear in Health Connect.
-- Galaxy Watch HRV for Body Stress Meter’s **finger/watch IBI session** uses the wear companion path separately from Health Connect sleep/steps.
+- Galaxy Watch HRV for BaseRatio’s **finger/watch IBI session** uses the wear companion path separately from Health Connect sleep/steps.
 
 ---
 
@@ -205,7 +205,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 2. In Google Health: **Connections → Partner apps** (or Profile → Settings).
 3. Set up / manage **Health Connect** sharing — allow Sleep, Steps, Exercise, Heart rate.
 4. On older Google Fit installs: Profile → Settings → turn on **Sync Fit with Health Connect**.
-5. Body Stress Meter → Allow → Sync.
+5. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -235,7 +235,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 2. Garmin Connect → **More (☰) → Settings → Health Connect**.
 3. Enable **Write** (and Read if you want) for Sleep, Steps, Heart rate, Exercise, etc. → **Allow**.
 4. Confirm under Health Connect → App permissions → **Garmin Connect**.
-5. Body Stress Meter → Allow → Sync.
+5. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -262,7 +262,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 1. Open Polar Flow → **General settings**.
 2. Turn on **Health Connect** (install HC from Play if prompted).
 3. Allow Sleep, Steps, Exercise, Heart rate, Resting HR, etc.
-4. Body Stress Meter → Allow → Sync.
+4. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -284,8 +284,8 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 1. Oura app → menu → **Settings → Data Sharing → Health Connect**.
 2. Install Health Connect if prompted.
-3. Toggle the categories you want to share (sleep is the main one for Body Stress Meter).
-4. Body Stress Meter → Allow → Sync.
+3. Toggle the categories you want to share (sleep is the main one for BaseRatio).
+4. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -311,7 +311,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 1. COROS app → **Profile → Settings → 3rd Party Apps → Data Sync**.
 2. Select **Health Connect**.
 3. Authorize Sleep / Steps / Exercise / Heart rate as offered.
-4. Body Stress Meter → Allow → Sync.
+4. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -328,12 +328,12 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 
 **Companion app:** Withings  
 
-**In-app path — export to Health Connect (what Body Stress Meter needs):**
+**In-app path — export to Health Connect (what BaseRatio needs):**
 
 1. Withings → **Profile → Settings (gear)**.
 2. Tap **Export health data to Health Connect**.
 3. Follow prompts → allow categories in Health Connect for Withings.
-4. Body Stress Meter → Allow → Sync.
+4. BaseRatio → Allow → Sync.
 
 **Official docs**
 
@@ -347,7 +347,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 **Notes**
 
 - Wait ~15 minutes after linking; Withings documents sync delay.
-- “Export” (Withings → HC) is the direction Body Stress Meter cares about.
+- “Export” (Withings → HC) is the direction BaseRatio cares about.
 
 ---
 
@@ -363,7 +363,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 2. WHOOP → **More / Settings → Integrations → Health Connect**.
 3. **Set up** → Allow sleep, recovery-related, workouts / activity (Allow all if offered).
 4. Open WHOOP again usually helps push a write (background can lag).
-5. Body Stress Meter → Allow → Sync.
+5. BaseRatio → Allow → Sync.
 
 **Official / reference**
 
@@ -390,7 +390,7 @@ Jump to your brand. Each section has short steps for Body Stress Meter users **a
 2. Open app settings and search for **Health Connect** / **Data sharing** / **Third-party services**.
 3. Enable write access for Sleep, Steps, Heart rate, Exercise.
 4. Confirm source under Health Connect → Browse data.
-5. Body Stress Meter → Allow → Sync.
+5. BaseRatio → Allow → Sync.
 
 **Official / reference**
 
@@ -414,9 +414,9 @@ Menu labels change often between Zepp and Zepp Life builds — if you do not see
 2. Look for **Health Connect**, **Google Fit / Health**, or **Third-party sync** in Settings.
 3. Allow Sleep / Steps / Heart rate / Workouts **write** permissions.
 4. Verify in Health Connect Browse data.
-5. Body Stress Meter → Allow → Sync.
+5. BaseRatio → Allow → Sync.
 
-Many value-tier brands expose HC under different names, or only after a Play Store update. If the companion **never** offers Health Connect, Body Stress Meter cannot invent sleep/workout rows from the watch.
+Many value-tier brands expose HC under different names, or only after a Play Store update. If the companion **never** offers Health Connect, BaseRatio cannot invent sleep/workout rows from the watch.
 
 ---
 
@@ -426,9 +426,9 @@ Many value-tier brands expose HC under different names, or only after a Play Sto
 
 **Companion app:** Huawei Health  
 
-Huawei Health historically uses **Huawei Health Kit**, not Health Connect write, on many regions/builds. If Health Connect Browse data never shows Huawei as a source for sleep/steps, Body Stress Meter cannot import that watch data through HC.
+Huawei Health historically uses **Huawei Health Kit**, not Health Connect write, on many regions/builds. If Health Connect Browse data never shows Huawei as a source for sleep/steps, BaseRatio cannot import that watch data through HC.
 
-**Workarounds users sometimes use** (outside this app): OEM bridges / third-party sync tools — not endorsed or supported by Body Stress Meter; use at your own risk and privacy judgment.
+**Workarounds users sometimes use** (outside this app): OEM bridges / third-party sync tools — not endorsed or supported by BaseRatio; use at your own risk and privacy judgment.
 
 ---
 
@@ -438,11 +438,11 @@ Huawei Health historically uses **Huawei Health Kit**, not Health Connect write,
 
 **Companion app:** Suunto  
 
-As of early 2026, many Suunto Android builds still lack a reliable native Health Connect **write** path. Check Suunto’s release notes / in-app Integrations after updates. Until Suunto appears as a source in Health Connect Browse data, Body Stress Meter will not see that watch’s sleep/workouts via HC.
+As of early 2026, many Suunto Android builds still lack a reliable native Health Connect **write** path. Check Suunto’s release notes / in-app Integrations after updates. Until Suunto appears as a source in Health Connect Browse data, BaseRatio will not see that watch’s sleep/workouts via HC.
 
 ---
 
-## 7. What Body Stress Meter uses from Health Connect
+## 7. What BaseRatio uses from Health Connect
 
 When available, Health Connect feeds:
 
@@ -474,7 +474,7 @@ The app tries to open the **companion you actually have installed** (Garmin, Fit
 | --- | --- | --- |
 | Permissions granted, Home still empty | Companion not writing to HC | Follow your brand in [§6](#6-provider-guides); verify [§5](#5-verify-data-is-actually-in-health-connect) |
 | Sleep missing, steps present | Sleep permission off in companion or BSM | Re-allow Sleep on both sides |
-| Data in HC, not in BSM | BSM read permission / need sync | App permissions → Body Stress Meter → Allow all → Sync now |
+| Data in HC, not in BSM | BSM read permission / need sync | App permissions → BaseRatio → Allow all → Sync now |
 | Only last ~30 days | Default HC history window | Grant **Access past data** / history read when offered |
 | Samsung data “allowed” but empty | Permissions set in Settings without reopening Samsung Health | Open Samsung Health after granting; Sync with Samsung account |
 | Garmin / WHOOP lag | Background sync | Open companion, pull to refresh, wait a few minutes |
@@ -484,9 +484,9 @@ The app tries to open the **companion you actually have installed** (Garmin, Fit
 **Reset checklist (Welltory-style):**
 
 1. Confirm companion → HC write in Health Connect Browse data.  
-2. Revoke and re-allow Body Stress Meter in HC App permissions.  
-3. Force-stop companion + Body Stress Meter, reopen both.  
-4. Sync watch → open companion → Sync now in Body Stress Meter.  
+2. Revoke and re-allow BaseRatio in HC App permissions.  
+3. Force-stop companion + BaseRatio, reopen both.  
+4. Sync watch → open companion → Sync now in BaseRatio.  
 5. Sleep on it: many companions only write a full sleep session after morning sync.
 
 ---
@@ -525,7 +525,7 @@ Welltory’s public help matches this architecture:
 
 See: [How to connect data source via Health Connect (Welltory)](https://help.welltory.com/en/articles/9214700-how-to-connect-data-source-via-health-connect).
 
-Body Stress Meter uses the same chain; this document is the long-form, multi-brand version you can host on GitHub Pages or link from the in-app **Watch & Health Connect** screen.
+BaseRatio uses the same chain; this document is the long-form, multi-brand version you can host on GitHub Pages or link from the in-app **Watch & Health Connect** screen.
 
 ---
 

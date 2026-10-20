@@ -1,14 +1,18 @@
-# Terms & Conditions — Body Stress Meter
+# Terms & Conditions — BaseRatio
 
 **Effective date:** 23 September 2026  
-**Last updated:** 17 October 2026  
-**App:** Body Stress Meter
+**Last updated:** 20 October 2026  
+**Google Play app name:** BaseRatio  
+**Previous Google Play name:** Body Stress Meter  
+**Android package name:** `com.akshayhrv`  
+**Developer / publisher / legal entity:** Akshay Dhillon, an individual developer in India  
+**Contact:** hrv_by_akshay@outlook.com
 
-These Terms & Conditions (“Terms”) govern your use of **Body Stress Meter** (the “App”). By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
+These Terms & Conditions (“Terms”) govern your use of **BaseRatio** (the “App”). BaseRatio is provided by **Akshay Dhillon**. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). These Terms apply to that same app under the new name. By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
 
-**Not a medical device.** Body Stress Meter is a personal wellness / fitness tool. It is **not** intended to diagnose, treat, cure, or prevent any disease. It is **not** a substitute for professional medical advice, diagnosis, or treatment. Do not ignore or delay seeking medical care because of something you see in the App.
+**Not a medical device.** BaseRatio is a personal wellness / fitness tool. It is **not** intended to diagnose, treat, cure, or prevent any disease. It is **not** a substitute for professional medical advice, diagnosis, or treatment. Do not ignore or delay seeking medical care because of something you see in the App.
 
-Body Stress Meter is an independent personal wellness app. It is not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer. Platform names appear only to describe optional integrations you may enable.
+BaseRatio is an independent personal wellness app. It is not affiliated with, sponsored by, or endorsed by Samsung, Google, Health Connect, Wear OS, or any device manufacturer. Platform names appear only to describe optional integrations you may enable.
 
 You can open these Terms and the Privacy Policy anytime from the App menu (☰).
 
@@ -16,7 +20,16 @@ You can open these Terms and the Privacy Policy anytime from the App menu (☰).
 
 ## 1. Who we are
 
-Body Stress Meter is provided by the independent developer behind this App (“we,” “us”). Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app. An optional companion watch app may exist for some builds or sideloads; **production Google Play builds may omit watch companion features**. Phone measuring (for example finger HRV) and Health Connect context remain available where you grant permission.
+| Item | Detail |
+|------|--------|
+| Google Play app name | **BaseRatio** |
+| Previous Google Play name | Body Stress Meter |
+| Android package / application ID | `com.akshayhrv` |
+| Developer / publisher name | **Akshay Dhillon** |
+| Legal entity | Akshay Dhillon, an individual developer based in India (not a registered company) |
+| Contact email | **hrv_by_akshay@outlook.com** |
+
+“We” and “us” mean **Akshay Dhillon**, the Google Play developer of BaseRatio. Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app. An optional companion watch app may exist for some builds or sideloads; **production Google Play builds may omit watch companion features**. Phone measuring (for example finger HRV) and Health Connect context remain available where you grant permission.
 
 ---
 
@@ -84,7 +97,8 @@ See the Privacy Policy for details on Health Connect, Physical activity / steps,
 4. Results can be wrong, incomplete, delayed, or affected by motion, lighting, skin tone, device quality, sensor limits, Health Connect gaps, user error, or algorithm limits.  
 5. You will **not** use the App as the sole basis for medical, medication, training-load, or emergency decisions.  
 6. If you feel unwell, have chest pain, dizziness, fainting, irregular heartbeat, or other concerning symptoms, seek **emergency or clinical care** — do not rely on the App.  
-7. You assume the risk of relying on App outputs for personal wellness decisions, to the maximum extent permitted by law.
+7. You assume the risk of relying on App outputs for personal wellness decisions, to the maximum extent permitted by law.  
+8. Guided meditation and breathwork pacing exercises (such as 4-6 Long Exhale, 4-7-8 Wind-Down, and Box Breathing) are provided solely for personal relaxation and mindful breathing practice. They are not medical treatments for anxiety disorders, panic attacks, or respiratory conditions. If you experience dizziness, lightheadedness, or shortness of breath, stop the exercise and resume natural breathing immediately.
 
 Nothing in the App creates a doctor–patient or clinician–patient relationship. Store listing text, screenshots, and in-App marketing must be read together with this section: wellness / fitness only.
 
@@ -92,9 +106,10 @@ Nothing in the App creates a doctor–patient or clinician–patient relationshi
 
 ## 8. Assumptions of risk — measurement & devices
 
-Camera fingertip measuring, watch optical sensors, and Health Connect feeds have inherent technical limits. You accept that:
+Camera fingertip measuring, optical face calm checks, guided breathwork, watch sensors, and Health Connect feeds have inherent technical limits. You accept that:
 
 - Sensor and signal-quality issues may produce missing or inaccurate sessions  
+- Optical Face Calm Checks are experimental contactless wellness cues reflecting subtle facial tension and do not constitute clinical neurological or vision assessments  
 - Auto HRV and background-related features depend on OS permissions, battery restrictions, and device vendor policies outside our control  
 - Pairing and Wear OS messaging may fail or drop sessions  
 - You are responsible for using the App safely (for example do not measure while driving or in unsafe situations)
@@ -179,4 +194,7 @@ If any provision is unenforceable, the rest remains in effect. These Terms plus 
 
 ## 17. Contact
 
-Questions about these Terms: **hrv_by_akshay@outlook.com**
+Questions about these Terms:
+
+- **Developer / legal entity:** Akshay Dhillon  
+- **Contact email:** hrv_by_akshay@outlook.com
