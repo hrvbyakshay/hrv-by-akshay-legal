@@ -1,14 +1,14 @@
 # Terms & Conditions — BaseRatio
 
 **Effective date:** 23 September 2026  
-**Last updated:** 20 October 2026  
+**Last updated:** 21 October 2026  
 **Google Play app name:** BaseRatio  
 **Previous Google Play name:** Body Stress Meter  
 **Android package name:** `com.akshayhrv`  
-**Developer / publisher / legal entity:** Akshay Dhillon, an individual developer in India  
+**Publisher:** Independent developer of BaseRatio on Google Play (India)  
 **Contact:** hrv_by_akshay@outlook.com
 
-These Terms & Conditions (“Terms”) govern your use of **BaseRatio** (the “App”). BaseRatio is provided by **Akshay Dhillon**. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). These Terms apply to that same app under the new name. By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
+These Terms & Conditions (“Terms”) govern your use of **BaseRatio** (the “App”). BaseRatio is provided by an independent developer on Google Play. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). These Terms apply to that same app under the new name. By installing or using the App, you agree to these Terms. If you do not agree, do not use the App.
 
 **Not a medical device.** BaseRatio is a personal wellness / fitness tool. It is **not** intended to diagnose, treat, cure, or prevent any disease. It is **not** a substitute for professional medical advice, diagnosis, or treatment. Do not ignore or delay seeking medical care because of something you see in the App.
 
@@ -25,11 +25,11 @@ You can open these Terms and the Privacy Policy anytime from the App menu (☰).
 | Google Play app name | **BaseRatio** |
 | Previous Google Play name | Body Stress Meter |
 | Android package / application ID | `com.akshayhrv` |
-| Developer / publisher name | **Akshay Dhillon** |
-| Legal entity | Akshay Dhillon, an individual developer based in India (not a registered company) |
+| Publisher | Independent developer of BaseRatio on Google Play |
+| Legal form | Individual developer based in India (not a registered company) |
 | Contact email | **hrv_by_akshay@outlook.com** |
 
-“We” and “us” mean **Akshay Dhillon**, the Google Play developer of BaseRatio. Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app. An optional companion watch app may exist for some builds or sideloads; **production Google Play builds may omit watch companion features**. Phone measuring (for example finger HRV) and Health Connect context remain available where you grant permission.
+“We” and “us” mean the Google Play developer of BaseRatio. Contact: **hrv_by_akshay@outlook.com**. These Terms apply to the Android phone app. An optional companion watch app may exist for some builds or sideloads; **production Google Play builds may omit watch companion features**. Phone measuring (for example finger HRV) and Health Connect context remain available where you grant permission.
 
 ---
 
@@ -196,5 +196,5 @@ If any provision is unenforceable, the rest remains in effect. These Terms plus 
 
 Questions about these Terms:
 
-- **Developer / legal entity:** Akshay Dhillon  
+- **Publisher:** the Google Play developer of BaseRatio  
 - **Contact email:** hrv_by_akshay@outlook.com

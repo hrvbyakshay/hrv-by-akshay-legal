@@ -1,14 +1,14 @@
 # Privacy Policy — BaseRatio
 
 **Effective date:** 23 September 2026  
-**Last updated:** 20 October 2026  
+**Last updated:** 21 October 2026  
 **Google Play app name:** BaseRatio  
 **Previous Google Play name:** Body Stress Meter  
 **Android package name:** `com.akshayhrv`  
-**Developer / publisher / legal entity:** Akshay Dhillon, an individual developer in India  
+**Publisher:** Independent developer of BaseRatio on Google Play (India)  
 **Contact:** hrv_by_akshay@outlook.com
 
-This Privacy Policy explains how **BaseRatio** (“we,” “us,” or “the App”) handles information when you use the App. BaseRatio is provided by **Akshay Dhillon**. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). This policy applies to that same app under the new name.
+This Privacy Policy explains how **BaseRatio** (“we,” “us,” or “the App”) handles information when you use the App. BaseRatio is provided by an independent developer on Google Play. The App was previously listed on Google Play as **Body Stress Meter** (same package `com.akshayhrv`). This policy applies to that same app under the new name.
 
 ### Listing identity (matches Google Play)
 
@@ -17,8 +17,8 @@ This Privacy Policy explains how **BaseRatio** (“we,” “us,” or “the Ap
 | Google Play app name | **BaseRatio** |
 | Previous Google Play name | Body Stress Meter |
 | Android package / application ID | `com.akshayhrv` |
-| Developer / publisher name | **Akshay Dhillon** |
-| Legal entity | Akshay Dhillon, an individual developer based in India (not a registered company) |
+| Publisher | Independent developer of BaseRatio on Google Play |
+| Legal form | Individual developer based in India (not a registered company) |
 | Contact email | **hrv_by_akshay@outlook.com** |
 
 **Your HRV · your data · download anytime.**
@@ -260,7 +260,7 @@ We may update this Privacy Policy. We will change the “Last updated” date ab
 
 For privacy questions about BaseRatio:
 
-- **Developer / legal entity:** Akshay Dhillon  
+- **Publisher:** the Google Play developer of BaseRatio  
 - **Contact email:** hrv_by_akshay@outlook.com
 
 ---
